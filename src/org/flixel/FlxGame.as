@@ -666,8 +666,11 @@ package org.flixel
 			_total = getTimer();
 			
 			//Set up the view window and double buffering
+			/*
 			stage.scaleMode = StageScaleMode.NO_SCALE;
             stage.align = StageAlign.TOP_LEFT;
+			*/
+			stage.scaleMode = StageScaleMode.EXACT_FIT;
             stage.frameRate = _flashFramerate;
 			
 			//Add basic input event listeners and mouse container

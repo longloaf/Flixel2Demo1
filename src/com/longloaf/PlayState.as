@@ -1,4 +1,4 @@
-package  
+package com.longloaf
 {
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
