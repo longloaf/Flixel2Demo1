@@ -11,7 +11,7 @@ package com.longloaf
 		public function Preloader() 
 		{
 			className = "com.longloaf.Main";
-			minDisplayTime = 5;
+			//minDisplayTime = 5;
 		}
 		
 	}

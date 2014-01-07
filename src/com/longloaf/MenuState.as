@@ -1,5 +1,6 @@
 package com.longloaf 
 {
+	import com.longloaf.d01_sprite.D1;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	/**
@@ -11,7 +12,7 @@ package com.longloaf
 		
 		override public function create():void 
 		{
-			var pButton:DemoButton = new DemoButton(100, 100, "PlayState", PlayState);
+			var pButton:DemoButton = new DemoButton(10, 10, "SPRITE", D1);
 			add(pButton);
 		}
 		

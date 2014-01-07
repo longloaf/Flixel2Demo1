@@ -17,15 +17,8 @@ package com.longloaf
 		
 		public function Main():void 
 		{
-			super(400, 300, MenuState, 2, 60, 60, true);
+			super(400, 300, MenuState, 2, 30, 30, true);
 			forceDebugger = true;
-			
-			addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-		}
-		
-		private function onAddedToStage(e:Event):void
-		{
-			FlxG.stage.scaleMode = StageScaleMode.EXACT_FIT;
 		}
 		
 	}
