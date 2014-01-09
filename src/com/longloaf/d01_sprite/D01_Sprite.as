@@ -1,5 +1,6 @@
 package com.longloaf.d01_sprite 
 {
+	import flash.display.BlendMode;
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
 	import org.flixel.FlxSprite;
@@ -7,11 +8,12 @@ package com.longloaf.d01_sprite
 	 * ...
 	 * @author Maksim Soldatov
 	 */
-	public class D1_Sprite extends FlxSprite
+	public class D01_Sprite extends FlxSprite
 	{
 		[Embed(source = "img_20x20_5.png")]
 		private static const Img:Class;
 		
+		private const FRAME_NUM:int = 5;
 		private const V:Number = 200;
 		
 		private var lx:Number;
@@ -19,7 +21,7 @@ package com.longloaf.d01_sprite
 		private var ty:Number;
 		private var by:Number;
 		
-		public function D1_Sprite() 
+		public function D01_Sprite() 
 		{
 			loadGraphic(Img, true, true, 20, 20);
 			
@@ -38,7 +40,8 @@ package com.longloaf.d01_sprite
 			scale.x = 1 + 2 * FlxG.random();
 			scale.y = 1 + 2 * FlxG.random();
 			facing = FlxG.random() > 0.5 ? FlxObject.LEFT : FlxObject.RIGHT;
-			frame = int(FlxG.random() * frames);
+			frame = int(FlxG.random() * FRAME_NUM);
+			blend = BlendMode.SCREEN;
 		}
 		
 		override public function update():void

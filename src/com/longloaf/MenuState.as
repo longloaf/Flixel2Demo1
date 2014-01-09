@@ -1,19 +1,27 @@
 package com.longloaf 
 {
-	import com.longloaf.d01_sprite.D1;
+	import com.longloaf.d01_sprite.D01;
+	import com.longloaf.d02_mouse.D02;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	/**
-	 * ...
+	 * Главное меню. Содержит список демонстраций.
 	 * @author Maksim Soldatov
 	 */
 	public class MenuState extends FlxState
 	{
 		
+		private var demos:Vector.<DemoData> = Vector.<DemoData>([
+		new DemoData("SPRITE", D01),
+		new DemoData("MOUSE", D02)]);
+		
 		override public function create():void 
 		{
-			var pButton:DemoButton = new DemoButton(10, 10, "SPRITE", D1);
-			add(pButton);
+			for (var i:int = 0; i < demos.length; ++i) {
+				var d:DemoData = demos[i];
+				var b:DemoButton = new DemoButton(10, 10 + i * 20, d.name, d.demoClass);
+				add(b);
+			}
 		}
 		
 	}

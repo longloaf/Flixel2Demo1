@@ -448,6 +448,7 @@ package org.flixel
 					_accumulator += elapsedMS;
 					if(_accumulator > _maxAccumulation)
 						_accumulator = _maxAccumulation;
+					// while(_accumulator >= _step)
 					while(_accumulator > _step)
 					{
 						step();
@@ -666,11 +667,9 @@ package org.flixel
 			_total = getTimer();
 			
 			//Set up the view window and double buffering
-			/*
-			stage.scaleMode = StageScaleMode.NO_SCALE;
-            stage.align = StageAlign.TOP_LEFT;
-			*/
-			stage.scaleMode = StageScaleMode.EXACT_FIT;
+			// stage.scaleMode = StageScaleMode.NO_SCALE;
+            // stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.EXACT_FIT; // Вместо 2-x предыдущих строк.
             stage.frameRate = _flashFramerate;
 			
 			//Add basic input event listeners and mouse container
