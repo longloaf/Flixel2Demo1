@@ -25,7 +25,7 @@ package com.longloaf
 		public function DemoHelp() 
 		{
 			bg = new FlxSprite();
-			bg.makeGraphic(1, 1, 0x500000FF);
+			bg.makeGraphic(1, 1, 0xE0506080);
 			bg.origin.x = bg.origin.y = 0;
 			bg.scale.x = FlxG.width;
 			bg.scale.y = bgMinScale;
@@ -36,7 +36,7 @@ package com.longloaf
 			add(group);
 			
 			helpText = new DemoText(0, 0, FlxG.width, "F1 - HELP");
-			helpText.color = 0xFF90FF90;
+			helpText.color = 0xFFD8E0F0;//0xFF90FF90;
 			add(helpText);
 		}
 		

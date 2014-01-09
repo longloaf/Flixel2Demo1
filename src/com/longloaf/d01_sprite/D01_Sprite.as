@@ -21,7 +21,9 @@ package com.longloaf.d01_sprite
 		private var ty:Number;
 		private var by:Number;
 		
-		public function D01_Sprite() 
+		private var d01:D01;
+		
+		public function D01_Sprite(d:D01) 
 		{
 			loadGraphic(Img, true, true, 20, 20);
 			
@@ -29,6 +31,8 @@ package com.longloaf.d01_sprite
 			rx = FlxG.width - width;
 			ty = 0;
 			by = FlxG.height - height;
+			
+			d01 = d;
 		}
 		
 		override public function reset(X:Number, Y:Number):void
