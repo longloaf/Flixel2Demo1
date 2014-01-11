@@ -18,6 +18,11 @@ package com.longloaf
 			return FlxG.random() > 0.5 ? 1 : -1;
 		}
 		
+		public static function angle():Number
+		{
+			return range(0, 360);
+		}
+		
 	}
 
 }

@@ -1,7 +1,7 @@
 package com.longloaf 
 {
 	import com.longloaf.d01_sprite.D01;
-	import com.longloaf.d02_mouse.D02;
+	import com.longloaf.d02_collision.D02;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	/**
@@ -13,7 +13,7 @@ package com.longloaf
 		
 		private var demos:Vector.<DemoData> = Vector.<DemoData>([
 		new DemoData("SPRITE", D01),
-		new DemoData("MOUSE", D02)]);
+		new DemoData("COLLISION", D02)]);
 		
 		override public function create():void 
 		{

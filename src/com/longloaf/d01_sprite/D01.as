@@ -10,7 +10,7 @@ package com.longloaf.d01_sprite
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	/**
-	 * ...
+	 * Демонстрация возможностей класса FlxSprite.
 	 * @author Maksim Soldatov
 	 */
 	public class D01 extends FlxState
@@ -36,19 +36,14 @@ package com.longloaf.d01_sprite
 		private const BLEND_MODES:Vector.<String> = Vector.<String>([
 		null,
 		BlendMode.ADD,
-		BlendMode.ALPHA,
 		BlendMode.DARKEN,
 		BlendMode.DIFFERENCE,
-		BlendMode.ERASE,
 		BlendMode.HARDLIGHT,
 		BlendMode.INVERT,
-		BlendMode.LAYER,
 		BlendMode.LIGHTEN,
 		BlendMode.MULTIPLY,
-		BlendMode.NORMAL,
 		BlendMode.OVERLAY,
 		BlendMode.SCREEN,
-		BlendMode.SHADER,
 		BlendMode.SUBTRACT]);
 		
 		private var spriteSettings:D01_SpriteSettings;

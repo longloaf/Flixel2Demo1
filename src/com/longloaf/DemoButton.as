@@ -3,7 +3,7 @@ package com.longloaf
 	import org.flixel.FlxButton;
 	import org.flixel.FlxG;
 	/**
-	 * ...
+	 * Кнопка показа демонстрации. Используется в главном меню.
 	 * @author Maksim Soldatov
 	 */
 	public class DemoButton extends FlxButton
