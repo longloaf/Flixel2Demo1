@@ -11,7 +11,7 @@ package com.longloaf
 	public class DemoHelp extends FlxGroup
 	{
 		private const TEXT_HEIGHT:Number = 14;
-		private const VSPACE_HEIGHT:Number = 5;
+		private const VSPACE_HEIGHT:Number = 7;
 		private var textY:Number = TEXT_HEIGHT + VSPACE_HEIGHT;
 		
 		private var bg:FlxSprite;
@@ -36,7 +36,7 @@ package com.longloaf
 			add(group);
 			
 			helpText = new DemoText(0, 0, FlxG.width, "F1 - HELP");
-			helpText.color = 0xFFD8E0F0;//0xFF90FF90;
+			helpText.color = 0xFFD8E0F0;
 			add(helpText);
 		}
 		

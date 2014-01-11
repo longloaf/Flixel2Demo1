@@ -6,6 +6,7 @@ package com.longloaf.d01_sprite
 	import flash.display.BlendMode;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
+	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	/**
@@ -14,14 +15,24 @@ package com.longloaf.d01_sprite
 	 */
 	public class D01 extends FlxState
 	{
+		[Embed(source = "bg.png")]
+		private static const BG:Class;
+		
+		private var bg:FlxSprite;
 		
 		private var group:FlxGroup;
 		
-		private var demoHelp:DemoHelp;
+		private var help:DemoHelp;
 		
-		private var numText:DemoText;
+		private var colorID:int;
+		private const COLORS:Vector.<uint> = Vector.<uint>([
+		FlxG.WHITE,
+		FlxG.RED,
+		FlxG.GREEN,
+		FlxG.BLUE,
+		FlxG.PINK]);
 		
-		private const COLORS:Vector.<uint> = Vector.<uint>([FlxG.WHITE, FlxG.RED, FlxG.GREEN, FlxG.BLUE]);
+		private var blendModeID:int;
 		private const BLEND_MODES:Vector.<String> = Vector.<String>([
 		null,
 		BlendMode.ADD,
@@ -40,12 +51,9 @@ package com.longloaf.d01_sprite
 		BlendMode.SHADER,
 		BlendMode.SUBTRACT]);
 		
-		public var scale:Boolean = false;
-		public var rotation:Boolean = false;
-		public var antialiasing:Boolean = false;
-		public var colorID:int = 0;
-		public var blendModeID:int = 0;
+		private var spriteSettings:D01_SpriteSettings;
 		
+		private var numText:DemoText;
 		private var scaleText:DemoText;
 		private var rotationText:DemoText;
 		private var antialiasingText:DemoText;
@@ -54,22 +62,38 @@ package com.longloaf.d01_sprite
 		
 		override public function create():void 
 		{
-			group = new FlxGroup();
-			add(group);
+			bg = new FlxSprite(0, 0, BG);
 			
-			demoHelp = new DemoHelp();
-			demoHelp.addText("K(1..3) - add 10^(K-1) sprites");
-			numText = demoHelp.addText();
-			demoHelp.addVSpace();
-			scaleText = demoHelp.addText();
-			rotationText = demoHelp.addText();
-			antialiasingText = demoHelp.addText();
-			colorText = demoHelp.addText();
-			blendModeText = demoHelp.addText();
-			add(demoHelp);
+			spriteSettings = new D01_SpriteSettings();
+			spriteSettings.scale = false;
+			spriteSettings.rotation = false;
+			spriteSettings.antialiasing = false;
+			colorID = 0;
+			spriteSettings.color = COLORS[colorID];
+			blendModeID = 0;
+			spriteSettings.blendMode = BLEND_MODES[blendModeID];
+			
+			group = new FlxGroup();
+			
+			help = new DemoHelp();
+			help.addText("K[1..3] - add 10^(K-1) sprites");
+			numText = help.addText();
+			help.addVSpace();
+			scaleText = help.addText();
+			rotationText = help.addText();
+			antialiasingText = help.addText();
+			colorText = help.addText();
+			blendModeText = help.addText();
+			help.addVSpace();
+			help.addText("[X] - clear");
 			updateText();
 			
+			add(bg);
+			add(group);
+			add(help);
 			add(new DemoPrompt("01"));
+			
+			addSprites(5);
 		}
 		
 		override public function update():void
@@ -84,27 +108,32 @@ package com.longloaf.d01_sprite
 			}
 			if (n > 0) {
 				addSprites(n);
-				updateNumText();
 			}
 			if (FlxG.keys.justPressed("S")) {
-				scale = !scale;
+				spriteSettings.scale = !spriteSettings.scale;
 				updateScaleText();
 			}
 			if (FlxG.keys.justPressed("A")) {
-				antialiasing = !antialiasing;
+				spriteSettings.antialiasing = !spriteSettings.antialiasing;
 				updateAntialiasingText();
 			}
 			if (FlxG.keys.justPressed("R")) {
-				rotation = !rotation;
+				spriteSettings.rotation = !spriteSettings.rotation;
 				updateRotationText();
 			}
 			if (FlxG.keys.justPressed("C")) {
 				colorID = (colorID + 1) % COLORS.length;
+				spriteSettings.color = COLORS[colorID];
 				updateColorText();
 			}
 			if (FlxG.keys.justPressed("B")) {
 				blendModeID = (blendModeID + 1) % BLEND_MODES.length;
+				spriteSettings.blendMode = BLEND_MODES[blendModeID];
 				updateBlendModeText();
+			}
+			if (FlxG.keys.justPressed("X")) {
+				group.clear();
+				updateNumText();
 			}
 			
 			super.update();
@@ -113,10 +142,11 @@ package com.longloaf.d01_sprite
 		private function addSprites(n:int):void
 		{
 			for (var i:int = 0; i < n; ++i) {
-				var s:D01_Sprite = new D01_Sprite(this);
+				var s:D01_Sprite = new D01_Sprite(spriteSettings);
 				s.reset(FlxG.random() * FlxG.width, FlxG.random() * FlxG.height);
 				group.add(s);
 			}
+			updateNumText();
 		}
 		
 		private function updateNumText():void
@@ -126,27 +156,27 @@ package com.longloaf.d01_sprite
 		
 		private function updateScaleText():void
 		{
-			scaleText.text = "[S] Scale: " + scale;
+			scaleText.text = "[S] Scale: " + spriteSettings.scale;
 		}
 		
 		private function updateRotationText():void
 		{
-			rotationText.text = "[R] Rotation: " + rotation;
+			rotationText.text = "[R] Rotation: " + spriteSettings.rotation;
 		}
 		
 		private function updateAntialiasingText():void
 		{
-			antialiasingText.text = "[A] Antialiasing: " + antialiasing;
+			antialiasingText.text = "[A] Antialiasing: " + spriteSettings.antialiasing;
 		}
 		
 		private function updateColorText():void
 		{
-			colorText.text = "[C] Color: " + COLORS[colorID].toString(16);
+			colorText.text = "[C] Color: 0x" + spriteSettings.color.toString(16);
 		}
 		
 		private function updateBlendModeText():void
 		{
-			blendModeText.text = "[B] Blend mode: " + BLEND_MODES[blendModeID];
+			blendModeText.text = "[B] Blend mode: " + spriteSettings.blendMode;;
 		}
 		
 		private function updateText():void
