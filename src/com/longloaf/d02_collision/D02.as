@@ -12,12 +12,13 @@ package com.longloaf.d02_collision
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	/**
-	 * ...
+	 * Демонстрация столкновений.
 	 * @author Maksim Soldatov
 	 */
 	public class D02 extends FlxState
 	{
-		private const IMMOVABLE_COLOR:uint = 0xFF505050;
+		private const IMMOVABLE_COLOR:uint = 0xFF303030;
+		private const P_SPEED:Number = 200;
 		
 		private var immovableGroup:FlxGroup;
 		
@@ -35,58 +36,58 @@ package com.longloaf.d02_collision
 			var path:FlxPath;
 			var point:FlxPoint;
 			
-			spr = makeImmovableSprite(350, 15);
-			spr.x = 25;
+			spr = makeImmovableSprite(400, 15);
+			spr.x = 0;
 			spr.y = 250;
 			spr.allowCollisions = FlxObject.UP;
 			immovableGroup.add(spr);
 			
-			spr = makeImmovableSprite(250, 15);
-			spr.x = 125;
+			spr = makeImmovableSprite(300, 15);
+			spr.x = 100;
 			spr.y = 100;
 			spr.allowCollisions = FlxObject.UP;
 			immovableGroup.add(spr);
 			
-			spr = makeImmovableSprite(15, 150);
-			spr.x = 25;
-			spr.y = 100;
+			spr = makeImmovableSprite(15, 300);
+			spr.x = 0;
+			spr.y = 0;
 			spr.allowCollisions = FlxObject.RIGHT;
 			immovableGroup.add(spr);
 			
-			spr = makeImmovableSprite(15, 150);
-			spr.x = 360;
-			spr.y = 100;
+			spr = makeImmovableSprite(15, 300);
+			spr.x = 385;
+			spr.y = 0;
 			spr.allowCollisions = FlxObject.LEFT;
 			immovableGroup.add(spr);
 			
 			spr = makeImmovableSprite(100, 15);
-			spr.x = 275;
-			spr.y = 250;
+			spr.x = 300;
+			spr.y = 265;
 			spr.allowCollisions = FlxObject.UP;
 			point = spr.getMidpoint();
-			point.y -= 150;
+			point.y -= 165;
 			path = new FlxPath([spr.getMidpoint(), point]);
-			spr.followPath(path, 100, FlxObject.PATH_YOYO);
+			spr.followPath(path, P_SPEED, FlxObject.PATH_YOYO);
 			immovableGroup.add(spr);
 			
 			spr = makeImmovableSprite(15, 50);
-			spr.x = 360;
+			spr.x = 415;
 			spr.y = 50;
 			spr.allowCollisions = FlxObject.LEFT;
 			point = spr.getMidpoint();
-			point.x -= 235;
+			point.x -= 315;
 			path = new FlxPath([spr.getMidpoint(), point]);
-			spr.followPath(path, 100, FlxObject.PATH_YOYO);
+			spr.followPath(path, P_SPEED, FlxObject.PATH_YOYO);
 			immovableGroup.add(spr);
 			
-			spr = makeImmovableSprite(15, 20);
-			spr.x = 25;
-			spr.y = 230;
+			spr = makeImmovableSprite(15, 15);
+			spr.x = -30;
+			spr.y = 235;
 			spr.allowCollisions = FlxObject.RIGHT | FlxObject.UP;
 			point = spr.getMidpoint();
-			point.x += 235;
+			point.x += 315;
 			path = new FlxPath([spr.getMidpoint(), point]);
-			spr.followPath(path, 100, FlxObject.PATH_YOYO);
+			spr.followPath(path, P_SPEED, FlxObject.PATH_YOYO);
 			immovableGroup.add(spr);
 			
 			
@@ -99,8 +100,8 @@ package com.longloaf.d02_collision
 			help.addVSpace();
 			help.addText("[X] - clear");
 			
-			add(immovableGroup);
 			add(group);
+			add(immovableGroup);
 			add(help);
 			add(new DemoPrompt("02"));
 			
