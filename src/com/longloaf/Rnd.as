@@ -7,10 +7,14 @@ package com.longloaf
 	 */
 	public class Rnd 
 	{
+		public static function rnd(x:Number):Number
+		{
+			return x * FlxG.random();
+		}
 		
 		public static function range(min:Number, max:Number):Number
 		{
-			return min + (max - min) * FlxG.random();
+			return min + rnd(max - min);
 		}
 		
 		public static function signum():Number
@@ -18,9 +22,14 @@ package com.longloaf
 			return FlxG.random() > 0.5 ? 1 : -1;
 		}
 		
-		public static function angle():Number
+		public static function angleDeg():Number
 		{
-			return range(0, 360);
+			return rnd(360);
+		}
+		
+		public static function angleRad():Number
+		{
+			return rnd(2 * Math.PI);
 		}
 		
 	}

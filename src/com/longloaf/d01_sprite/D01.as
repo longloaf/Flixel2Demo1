@@ -88,7 +88,7 @@ package com.longloaf.d01_sprite
 			add(help);
 			add(new DemoPrompt("01"));
 			
-			addSprites(5);
+			addSprites(100);
 		}
 		
 		override public function update():void
@@ -137,9 +137,7 @@ package com.longloaf.d01_sprite
 		private function addSprites(n:int):void
 		{
 			for (var i:int = 0; i < n; ++i) {
-				var s:D01_Sprite = new D01_Sprite(spriteSettings);
-				s.reset(FlxG.random() * FlxG.width, FlxG.random() * FlxG.height);
-				group.add(s);
+				group.add(new D01_Sprite(spriteSettings));
 			}
 			updateNumText();
 		}

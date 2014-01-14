@@ -43,19 +43,17 @@ package com.longloaf.d01_sprite
 			by = FlxG.height - height;
 			
 			spriteSettings = ss;
-		}
-		
-		override public function reset(X:Number, Y:Number):void
-		{
-			super.reset(X, Y);
 			
-			facing = FlxG.random() > 0.5 ? FlxObject.LEFT : FlxObject.RIGHT;
-			frame = int(FlxG.random() * FRAME_NUM);
+			x = Rnd.rnd(FlxG.width);
+			y = Rnd.rnd(FlxG.height);
 			
 			var a:Number = FlxG.random() * Math.PI * 2;
 			var v:Number = Rnd.range(VEL_MIN, VEL_MAX);
 			velocity.x = v * Math.cos(a);
 			velocity.y = v * Math.sin(a);
+			
+			facing = FlxG.random() > 0.5 ? FlxObject.LEFT : FlxObject.RIGHT;
+			frame = int(FlxG.random() * FRAME_NUM);
 			
 			sprScaleX = Rnd.range(SCALE_MIN, SCALE_MAX);
 			sprScaleY = Rnd.range(SCALE_MIN, SCALE_MAX);
