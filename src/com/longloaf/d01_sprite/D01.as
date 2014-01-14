@@ -71,7 +71,8 @@ package com.longloaf.d01_sprite
 			group = new FlxGroup();
 			
 			help = new DemoHelp();
-			help.addText("K[1..3] - add 10^(K-1) sprites");
+			help.addText("[1] - add 10 sprites");
+			help.addText("[2] - add 100 sprites");
 			numText = help.addText();
 			help.addVSpace();
 			scaleText = help.addText();
@@ -93,16 +94,10 @@ package com.longloaf.d01_sprite
 		
 		override public function update():void
 		{
-			var n:int = 0;
 			if (FlxG.keys.justPressed("ONE")) {
-				n = 1;
+				addSprites(10);
 			} else if (FlxG.keys.justPressed("TWO")) {
-				n = 10;
-			} else if (FlxG.keys.justPressed("THREE")) {
-				n = 100;
-			}
-			if (n > 0) {
-				addSprites(n);
+				addSprites(100);
 			}
 			if (FlxG.keys.justPressed("S")) {
 				spriteSettings.scale = !spriteSettings.scale;

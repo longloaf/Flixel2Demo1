@@ -14,8 +14,10 @@ package com.longloaf.d02_collision
 		
 		public function D02_Sprite() 
 		{
-			makeGraphic(10, 10, 0xFF808080);
-			color = FlxU.makeColorFromHSB(Rnd.rnd(360), 1, 1);
+			makeGraphic(10, 10, 0xFFFFFFFF);
+			var c:int = Rnd.range( -100, 100);
+			if (c < 0) c += 360;
+			color = FlxU.makeColorFromHSB(uint(c), 0.8, 0.8);
 			
 			var v:Number = Rnd.rnd(MAX_VEL);
 			var a:Number = Rnd.angleRad();
@@ -26,8 +28,7 @@ package com.longloaf.d02_collision
 			
 			maxVelocity.make(MAX_VEL, MAX_VEL);
 			
-			//mass = 100;
-			elasticity = 0.7;
+			elasticity = 0.5;
 		}
 		
 		override public function update():void 
