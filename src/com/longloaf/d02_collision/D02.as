@@ -18,7 +18,7 @@ package com.longloaf.d02_collision
 	public class D02 extends FlxState
 	{
 		private const IMMOVABLE_COLOR:uint = 0xFF303030;
-		private const P_SPEED:Number = 200;
+		private const IMMOVABLE_WIDTH:Number = 15;
 		
 		private var immovableGroup:FlxGroup;
 		
@@ -32,64 +32,66 @@ package com.longloaf.d02_collision
 		{
 			immovableGroup = new FlxGroup();
 			
-			var spr:FlxSprite;
 			var path:FlxPath;
-			var point:FlxPoint;
+			var point1:FlxPoint
+			var point2:FlxPoint;
 			
-			spr = makeImmovableSprite(400, 15);
-			spr.x = 0;
-			spr.y = 250;
-			spr.allowCollisions = FlxObject.UP;
-			immovableGroup.add(spr);
+			var leftWall:FlxSprite = makeImmovableSprite(IMMOVABLE_WIDTH, FlxG.height);
+			leftWall.x = 0;
+			leftWall.y = 0;
+			leftWall.allowCollisions = FlxObject.RIGHT;
+			immovableGroup.add(leftWall);
 			
-			spr = makeImmovableSprite(300, 15);
-			spr.x = 100;
-			spr.y = 100;
-			spr.allowCollisions = FlxObject.UP;
-			immovableGroup.add(spr);
+			var rightWall:FlxSprite = makeImmovableSprite(IMMOVABLE_WIDTH, FlxG.height);
+			rightWall.x = FlxG.width - rightWall.width;
+			rightWall.y = 0;
+			rightWall.allowCollisions = FlxObject.LEFT;
+			immovableGroup.add(rightWall);
 			
-			spr = makeImmovableSprite(15, 300);
-			spr.x = 0;
-			spr.y = 0;
-			spr.allowCollisions = FlxObject.RIGHT;
-			immovableGroup.add(spr);
+			var bottomPlatform:FlxSprite = makeImmovableSprite(FlxG.width, IMMOVABLE_WIDTH);
+			bottomPlatform.x = 0;
+			bottomPlatform.y = 0.8 * FlxG.height;
+			bottomPlatform.allowCollisions = FlxObject.UP;
+			immovableGroup.add(bottomPlatform);
 			
-			spr = makeImmovableSprite(15, 300);
-			spr.x = 385;
-			spr.y = 0;
-			spr.allowCollisions = FlxObject.LEFT;
-			immovableGroup.add(spr);
+			var topPlatform:FlxSprite = makeImmovableSprite(0.75 * FlxG.width, IMMOVABLE_WIDTH);
+			topPlatform.x = FlxG.width - topPlatform.width;
+			topPlatform.y = 0.3 * FlxG.height;
+			topPlatform.allowCollisions = FlxObject.UP;
+			immovableGroup.add(topPlatform);
 			
-			spr = makeImmovableSprite(100, 15);
-			spr.x = 300;
-			spr.y = 265;
-			spr.allowCollisions = FlxObject.UP;
-			point = spr.getMidpoint();
-			point.y -= 165;
-			path = new FlxPath([spr.getMidpoint(), point]);
-			spr.followPath(path, P_SPEED, FlxObject.PATH_YOYO);
-			immovableGroup.add(spr);
+			var elevator:FlxSprite = makeImmovableSprite(0.25 * FlxG.width, IMMOVABLE_WIDTH);
+			elevator.x = FlxG.width - elevator.width;
+			elevator.y = bottomPlatform.y + bottomPlatform.height;
+			elevator.allowCollisions = FlxObject.UP;
+			point1 = elevator.getMidpoint();
+			point2 = topPlatform.getMidpoint();
+			point2.x = point1.x;
+			path = new FlxPath([point1, point2]);
+			elevator.followPath(path, 200, FlxObject.PATH_YOYO);
+			immovableGroup.add(elevator);
 			
-			spr = makeImmovableSprite(15, 50);
-			spr.x = 415;
-			spr.y = 50;
-			spr.allowCollisions = FlxObject.LEFT;
-			point = spr.getMidpoint();
-			point.x -= 315;
-			path = new FlxPath([spr.getMidpoint(), point]);
-			spr.followPath(path, P_SPEED, FlxObject.PATH_YOYO);
-			immovableGroup.add(spr);
+			var topPusher:FlxSprite = makeImmovableSprite(IMMOVABLE_WIDTH, 0.15 * FlxG.height);
+			topPusher.x = FlxG.width + topPusher.width;
+			topPusher.y = topPlatform.y - topPusher.height;
+			topPusher.allowCollisions = FlxObject.LEFT;
+			point1 = topPusher.getMidpoint();
+			point2 = (new FlxPoint()).copyFrom(point1);
+			point2.x = topPlatform.x + topPusher.width / 2;
+			path = new FlxPath([point1, point2]);
+			topPusher.followPath(path, 250, FlxObject.PATH_YOYO);
+			immovableGroup.add(topPusher);
 			
-			spr = makeImmovableSprite(15, 15);
-			spr.x = -30;
-			spr.y = 235;
-			spr.allowCollisions = FlxObject.RIGHT | FlxObject.UP;
-			point = spr.getMidpoint();
-			point.x += 315;
-			path = new FlxPath([spr.getMidpoint(), point]);
-			spr.followPath(path, P_SPEED, FlxObject.PATH_YOYO);
-			immovableGroup.add(spr);
-			
+			var bottomPusher:FlxSprite = makeImmovableSprite(IMMOVABLE_WIDTH, IMMOVABLE_WIDTH);
+			bottomPusher.x = -2 * bottomPusher.width;
+			bottomPusher.y = bottomPlatform.y - bottomPusher.height;
+			bottomPusher.allowCollisions = FlxObject.RIGHT | FlxObject.UP;
+			point1 = bottomPusher.getMidpoint();
+			point2 = (new FlxPoint()).copyFrom(point1);
+			point2.x = elevator.x - bottomPusher.width / 2;
+			path = new FlxPath([point1, point2]);
+			bottomPusher.followPath(path, 150, FlxObject.PATH_YOYO);
+			immovableGroup.add(bottomPusher);
 			
 			group = new FlxGroup();
 			
