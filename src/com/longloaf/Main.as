@@ -23,6 +23,8 @@ package com.longloaf
 	 * заменена на while(_accumulator > _step). На форуме пишут, что это помогает
 	 * сгладить частоту кадров.
 	 * 
+	 * 3. В методе FlxSprite.destroy() добавлен вызов super.destroy().
+	 * 
 	 * @author Maksim Soldatov
 	 */
 	public class Main extends FlxGame 

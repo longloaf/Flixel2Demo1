@@ -205,6 +205,7 @@ package org.flixel
 		 */
 		override public function destroy():void
 		{
+			super.destroy();
 			if(_animations != null)
 			{
 				var a:FlxAnim;
