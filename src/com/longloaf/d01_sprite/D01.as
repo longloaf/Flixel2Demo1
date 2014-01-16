@@ -87,7 +87,7 @@ package com.longloaf.d01_sprite
 			add(bg);
 			add(group);
 			add(help);
-			add(new DemoPrompt("01"));
+			add(new DemoPrompt("Sprite"));
 			
 			addSprites(100);
 		}

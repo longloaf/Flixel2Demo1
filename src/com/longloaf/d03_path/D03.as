@@ -20,13 +20,16 @@ package com.longloaf.d03_path
 		
 		private var tileMap:FlxTilemap;
 		private var sprite:FlxSprite;
-		private var sprite2:FlxSprite;
+		private var path:FlxPath;
+		private var p:FlxPoint = null;
 		
 		override public function create():void 
 		{
 			help = new DemoHelp();
 			
-			sprite = new FlxSprite(50, 50);
+			sprite = new FlxSprite();
+			sprite.x = (FlxG.width - sprite.width) / 2;
+			sprite.y = (FlxG.height - sprite.height) / 2;
 			sprite.makeGraphic(20, 20, 0xFF006000);
 			sprite.drag.make(1000, 1000);
 			
@@ -37,34 +40,38 @@ package com.longloaf.d03_path
 			var point5:FlxPoint = new FlxPoint(350, 250);
 			var point6:FlxPoint = new FlxPoint(50, 250);
 			
-			var path:FlxPath = new FlxPath([point1, point2, point3, point4, point5, point6]);
+			path = new FlxPath([point1, point2, point3, point4, point5, point6]);
+			//path = new FlxPath([point1]);
 			//sprite.followPath(path, 200, FlxObject.PATH_BACKWARD);
 			//sprite.followPath(path, 200, FlxObject.PATH_BACKWARD);
 			//sprite.followPath(path, 200, FlxObject.PATH_HORIZONTAL_ONLY);
 			//sprite.followPath(path, 200, FlxObject.PATH_LOOP_BACKWARD);
-			//sprite.followPath(path, 200, FlxObject.PATH_LOOP_FORWARD);
+			sprite.followPath(path, 200, FlxObject.PATH_LOOP_FORWARD);
 			//sprite.followPath(path, 200, FlxObject.PATH_VERTICAL_ONLY);
-			sprite.followPath(path, 200, FlxObject.PATH_YOYO);
+			//sprite.followPath(path, 200, FlxObject.PATH_YOYO);
 			
-			sprite2 = new FlxSprite();
-			sprite2.makeGraphic(20, 20, 0xFF600000);
-			sprite2.x = point3.x - sprite2.width / 2;
-			sprite2.y = point3.y - sprite2.height / 2;
-			sprite2.immovable = true;
-			
-			FlxG.log(FlxG.visualDebug);
 			FlxG.visualDebug = true;
 			
 			add(sprite);
-			add(sprite2);
 			add(help);
-			add(new DemoPrompt("03"));
+			add(new DemoPrompt("Path"));
 		}
 		
 		override public function update():void 
 		{
+			if (FlxG.mouse.justPressed()) {
+				p = new FlxPoint(FlxG.mouse.x, FlxG.mouse.y);
+				path.addPoint(p, true);
+			} else if (FlxG.mouse.pressed()) {
+				p.make(FlxG.mouse.x, FlxG.mouse.y);
+			}
 			super.update();
-			FlxG.collide(sprite, sprite2);
+		}
+		
+		override public function destroy():void 
+		{
+			super.destroy();
+			FlxG.visualDebug = false;
 		}
 		
 	}

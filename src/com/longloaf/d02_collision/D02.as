@@ -11,13 +11,14 @@ package com.longloaf.d02_collision
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
+	import org.flixel.FlxU;
 	/**
 	 * Демонстрация столкновений.
 	 * @author Maksim Soldatov
 	 */
 	public class D02 extends FlxState
 	{
-		private const IMMOVABLE_COLOR:uint = 0xFF303030;
+		private const IMMOVABLE_COLOR:uint = FlxU.makeColorFromHSB(0, 0, 0.3);
 		private const IMMOVABLE_WIDTH:Number = 15;
 		
 		private var immovableGroup:FlxGroup;
@@ -105,7 +106,7 @@ package com.longloaf.d02_collision
 			add(group);
 			add(immovableGroup);
 			add(help);
-			add(new DemoPrompt("02"));
+			add(new DemoPrompt("Collision"));
 			
 			addSprites(10);
 		}
@@ -134,10 +135,10 @@ package com.longloaf.d02_collision
 			updateNumText();
 		}
 		
-		private function makeImmovableSprite(width:Number, height:Number, color:uint = IMMOVABLE_COLOR):FlxSprite
+		private function makeImmovableSprite(width:Number, height:Number):FlxSprite
 		{
 			var s:FlxSprite = new FlxSprite();
-			s.makeGraphic(width, height, color);
+			s.makeGraphic(width, height, IMMOVABLE_COLOR);
 			s.immovable = true;
 			return s;
 		}
