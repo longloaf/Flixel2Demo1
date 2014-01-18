@@ -15,9 +15,9 @@ package com.longloaf.d02_collision
 		public function D02_Sprite() 
 		{
 			makeGraphic(10, 10, 0xFFFFFFFF);
-			var c:int = Rnd.range( -100, 100);
-			if (c < 0) c += 360;
-			color = FlxU.makeColorFromHSB(uint(c), 0.8, 0.8);
+			var h:int = Rnd.range( -100, 100);
+			if (h < 0) h += 360;
+			color = FlxU.makeColorFromHSB(uint(h), 0.8, 0.8);
 			
 			var v:Number = Rnd.rnd(MAX_VEL);
 			var a:Number = Rnd.angleRad();

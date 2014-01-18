@@ -13,41 +13,46 @@ package com.longloaf.d04_pathfinding
 	 */
 	public class D04_Sprite extends FlxSprite
 	{
-		private var tileMap:FlxTilemap;
+		private const PATH_SPEED:Number = 50;
+		private const MOUSE_PATH_SPEED:Number = 200;
 		
-		public function D04_Sprite(map:FlxTilemap) 
+		private var tileMap:FlxTilemap;
+		private var mouseSprite:FlxSprite;
+		
+		public function D04_Sprite(map:FlxTilemap, mSpr:FlxSprite) 
 		{
-			makeGraphic(D04.TILE_SIZE, D04.TILE_SIZE, FlxU.makeColorFromHSB(100, 0.5, 0.5));
+			var h:Number = 100 + Rnd.range( -70, 70);
+			makeGraphic(4, 4, FlxU.makeColorFromHSB(h, 0.5, 0.5));
 			
 			tileMap = map;
+			mouseSprite = mSpr;
 		}
 		
 		override public function update():void 
 		{
-			if (path == null) {
-				var point:FlxPoint = Rnd.point(FlxG.width, FlxG.height);
-				var newPath:FlxPath = tileMap.findPath(getMidpoint(), point);
-				if (newPath != null) followPath(newPath);
-			} else {
-				if (pathSpeed == 0) {
-					velocity.x = velocity.y = 0;
-					stopFollowingPath(true);
-				}
-			}
-			/*
-			if (pathSpeed == 0) {
-				velocity.x = velocity.y = 0;
-				stopFollowingPath(true);
-			}
+			var point:FlxPoint;
+			var newPath:FlxPath;
 			if (FlxG.mouse.justPressed()) {
-				if (path != null) stopFollowingPath(true);
-				var mousePoint:FlxPoint = new FlxPoint(FlxG.mouse.x, FlxG.mouse.y);
-				var p:FlxPath = tileMap.findPath(getMidpoint(), mousePoint);
-				if (p != null) {
-					followPath(p);
+				point = mouseSprite.getMidpoint();
+				newPath = tileMap.findPath(getMidpoint(), point);
+				if (newPath != null) {
+					stopFollowingPath(true);
+					followPath(newPath, MOUSE_PATH_SPEED);
+				}
+			} else {
+				if (path == null) {
+					point = new FlxPoint();
+					point.x = (int(Rnd.rnd(tileMap.widthInTiles)) + 0.5) * D04.TILE_SIZE;
+					point.y = (int(Rnd.rnd(tileMap.heightInTiles)) + 0.5) * D04.TILE_SIZE;
+					newPath = tileMap.findPath(getMidpoint(), point);
+					if (newPath != null) followPath(newPath, PATH_SPEED);
+				} else {
+					if (pathSpeed == 0) {
+						velocity.x = velocity.y = 0;
+						stopFollowingPath(true);
+					}
 				}
 			}
-			*/
 		}
 		
 	}
