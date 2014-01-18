@@ -17,11 +17,12 @@ package com.longloaf.d03_path
 	{
 		private var help:DemoHelp;
 		
-		
 		private var tileMap:FlxTilemap;
 		private var sprite:FlxSprite;
 		private var path:FlxPath;
 		private var p:FlxPoint = null;
+		
+		private var visualDebugOld:Boolean;
 		
 		override public function create():void 
 		{
@@ -50,11 +51,12 @@ package com.longloaf.d03_path
 			//sprite.followPath(path, 200, FlxObject.PATH_VERTICAL_ONLY);
 			//sprite.followPath(path, 200, FlxObject.PATH_YOYO);
 			
-			FlxG.visualDebug = true;
-			
 			add(sprite);
 			add(help);
 			add(new DemoPrompt("Path"));
+			
+			visualDebugOld = FlxG.visualDebug;
+			FlxG.visualDebug = true;
 		}
 		
 		override public function update():void 
@@ -71,7 +73,7 @@ package com.longloaf.d03_path
 		override public function destroy():void 
 		{
 			super.destroy();
-			FlxG.visualDebug = false;
+			FlxG.visualDebug = visualDebugOld;
 		}
 		
 	}
