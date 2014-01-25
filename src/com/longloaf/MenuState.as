@@ -8,6 +8,7 @@ package com.longloaf
 	import com.longloaf.d06_particles.D06;
 	import com.longloaf.d07_replays.D07;
 	import com.longloaf.d08_debug.D08;
+	import com.longloaf.d09_sort.D09;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
 	/**
@@ -25,7 +26,8 @@ package com.longloaf
 		new DemoData("Camera", D05),
 		new DemoData("Particles", D06),
 		new DemoData("Replays", D07),
-		new DemoData("Debug", D08)]);
+		new DemoData("Debug", D08),
+		new DemoData("Sort", D09)]);
 		
 		override public function create():void 
 		{

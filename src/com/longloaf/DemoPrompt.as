@@ -19,7 +19,7 @@ package com.longloaf
 		
 		public function DemoPrompt(name:String) 
 		{
-			text = new DemoText(0, 0, FlxG.width, "\"" + name + "\" ENTER - RESET, ESC - MENU");
+			text = new DemoText(0, 0, FlxG.width, "\"" + name + "\" Enter - reset, Esc - menu");
 			text.color = TEXT_COLOR;
 			text.y = FlxG.height - text.height;
 			
