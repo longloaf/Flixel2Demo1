@@ -11,8 +11,28 @@ package com.longloaf.d09_sort
 	 */
 	public class D09_Sprite extends FlxSprite
 	{
-		private const VEL_MIN:Number = 1;
-		private const VEL_MAX:Number = 20;
+		[Embed(source = "img01.png")]
+		private static const Img01:Class;
+		
+		[Embed(source = "img02.png")]
+		private static const Img02:Class;
+		
+		[Embed(source = "img03.png")]
+		private static const Img03:Class;
+		
+		[Embed(source = "img04.png")]
+		private static const Img04:Class;
+		
+		[Embed(source = "img05.png")]
+		private static const Img05:Class;
+		
+		[Embed(source = "img06.png")]
+		private static const Img06:Class;
+		
+		private const IMGS:Vector.<Class> = Vector.<Class>([Img01, Img02, Img03, Img04, Img05, Img06]);
+		
+		private const VEL_MIN:Number = 10;
+		private const VEL_MAX:Number = 50;
 		
 		public var posX:Number;
 		public var posY:Number;
@@ -24,9 +44,9 @@ package com.longloaf.d09_sort
 		private var borderTopY:Number;
 		private var borderBottomY:Number;
 		
-		public function D09_Sprite() 
+		public function D09_Sprite()
 		{
-			makeGraphic(Rnd.range(10, 20), Rnd.range(10, 100), FlxU.makeColorFromHSB(Rnd.rnd(100), 0.5, 0.5));
+			loadGraphic(IMGS[int(Rnd.rnd(IMGS.length))]);
 			
 			borderLeftX = 0;
 			borderRightX = FlxG.width - width;
