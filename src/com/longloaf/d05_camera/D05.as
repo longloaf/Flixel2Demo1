@@ -20,6 +20,7 @@ package com.longloaf.d05_camera
 		private static const Map:Class;
 		
 		private const TILE_SIZE:int = 8;
+		private const HALF_TILE:Number = TILE_SIZE * 0.5;
 		
 		private var help:DemoHelp;
 		
@@ -38,6 +39,7 @@ package com.longloaf.d05_camera
 			
 			tileMap = new FlxTilemap();
 			tileMap.loadMap(FlxTilemap.imageToCSV(Map), Tiles, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0);
+			tileMap.x = (FlxG.width - tileMap.width) / 2;
 			tileMap.y = 104 - tileMap.height;
 			
 			player = new D05_Player();
@@ -74,9 +76,11 @@ package com.longloaf.d05_camera
 			super.update();
 			FlxG.collide(player, tileMap);
 			
+			var roomWidth:Number = cam2.width - TILE_SIZE;
+			var x0:Number = tileMap.x + HALF_TILE;
 			player.getMidpoint(point);
-			point.x -= tileMap.x;
-			point.x = tileMap.x + (int(point.x / cam2.width) + 0.5) * cam2.width;
+			point.x -= x0;
+			point.x = x0 + (int(point.x / roomWidth) + 0.5) * roomWidth;
 			point.y = tileMap.y + cam2.height * 0.5;
 			cam2.focusOn(point);
 		}
