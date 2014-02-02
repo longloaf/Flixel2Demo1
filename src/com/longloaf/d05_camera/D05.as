@@ -28,13 +28,15 @@ package com.longloaf.d05_camera
 		private var help:DemoHelp;
 		
 		private var tileMap:FlxTilemap;
-		private var spikeGroup:FlxGroup;
+		private var lavaGroup:FlxGroup;
 		
 		private var player:D05_Player;
 		private var point:FlxPoint;
 		
 		private var cam1:FlxCamera;
 		private var cam2:FlxCamera;
+		
+		public static const GRAV:Number = 300;
 		
 		override public function create():void 
 		{
@@ -46,7 +48,7 @@ package com.longloaf.d05_camera
 			tileMap.x = (FlxG.width - tileMap.width) / 2;
 			tileMap.y = 104 - tileMap.height;
 			
-			spikeGroup = new FlxGroup();
+			lavaGroup = new FlxGroup();
 			
 			player = new D05_Player();
 			player.x = tileMap.x + 4 * TILE_SIZE;
@@ -63,13 +65,18 @@ package com.longloaf.d05_camera
 			FlxG.addCamera(cam2);
 			
 			add(tileMap);
-			add(spikeGroup);
 			add(player);
+			add(lavaGroup);
 			add(help);
 			add(new DemoPrompt("Camera"));
 			
-			makeSpikes(2, 8, 6);
-			makeSpikes(11, 8, 6);
+			makeLavaLiquid(2, 8, 6);
+			makeLavaLiquid(11, 8, 6);
+			
+			makeLavaBall(2, 8, 4, 1);
+			makeLavaBall(3, 8, 4, 2);
+			makeLavaBall(6, 8, 3);
+			makeLavaBall(7, 8, 3);
 		}
 		
 		override public function update():void 
@@ -86,7 +93,8 @@ package com.longloaf.d05_camera
 			}
 			super.update();
 			FlxG.collide(player, tileMap);
-			FlxG.overlap(player, spikeGroup, ovPlayerSpikes);
+			FlxG.collide(lavaGroup, tileMap);
+			FlxG.overlap(player, lavaGroup, ovPlayer);
 			
 			var roomWidth:Number = cam2.width - TILE_SIZE;
 			var x0:Number = tileMap.x + HALF_TILE;
@@ -97,7 +105,7 @@ package com.longloaf.d05_camera
 			cam2.focusOn(point);
 		}
 		
-		private function ovPlayerSpikes(o1:FlxObject, o2:FlxObject):void
+		private function ovPlayer(o1:FlxObject, o2:FlxObject):void
 		{
 			player.kill();
 		}
@@ -108,14 +116,21 @@ package com.longloaf.d05_camera
 			s.last.y = s.y = tileMap.y + (ty + 1) * TILE_SIZE - s.height;
 		}
 		
-		private function makeSpikes(tx:int, ty:int, num:int):void
+		private function makeLavaLiquid(tx:int, ty:int, num:int):void
 		{
 			for (var i:int = 0; i < num; ++i) {
-				var s:D05_Spikes = new D05_Spikes();
+				var s:D05_LavaLiquid = new D05_LavaLiquid();
 				moveSprite(s, tx, ty);
-				spikeGroup.add(s);
+				lavaGroup.add(s);
 				++tx;
 			}
+		}
+		
+		private function makeLavaBall(tx:int, ty:int, interval:Number, delay:Number = 0):void
+		{
+			var s:D05_LavaBall = new D05_LavaBall(interval, delay)
+			moveSprite(s, tx, ty);
+			lavaGroup.add(s);
 		}
 		
 	}

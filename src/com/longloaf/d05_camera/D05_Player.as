@@ -7,7 +7,7 @@ package com.longloaf.d05_camera
 	 * ...
 	 * @author Maksim Soldatov
 	 */
-	public class D05_Player extends FlxSprite
+	public class D05_Player extends D05_Sprite
 	{
 		[Embed(source = "player_8x8_4.png")]
 		private static const Img:Class;
@@ -34,18 +34,8 @@ package com.longloaf.d05_camera
 			addAnimation(JUMP_ANIM, [0, 3], 10);
 			play(STOP_ANIM);
 			
-			acceleration.y = 300;
 			maxVelocity.x = 40;
 			maxVelocity.y = 100;
-			
-			/*
-			FlxG.watch(acceleration, "y", "grav");
-			FlxG.watch(this, "jmpv", "jmpv");
-			FlxG.watch(this, "accx", "accx");
-			FlxG.watch(this, "dragx", "dragx");
-			FlxG.watch(maxVelocity, "x", "maxVelX");
-			FlxG.watch(maxVelocity, "y", "maxVelY");
-			*/
 		}
 		
 		override public function update():void 
