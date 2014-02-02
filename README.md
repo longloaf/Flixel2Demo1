@@ -1,2 +1,2 @@
-Flixel2Demo1
+Flixel2 Demo
 ============
