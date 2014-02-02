@@ -2,6 +2,7 @@ package com.longloaf.d05_camera
 {
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxU;
 	/**
 	 * ...
 	 * @author Maksim Soldatov
@@ -14,7 +15,7 @@ package com.longloaf.d05_camera
 		
 		public function D05_Player() 
 		{
-			makeGraphic(6, 7, 0xFF009000);
+			makeGraphic(6, 7, FlxU.makeColorFromHSB(340, 0.3, 1));
 			height = 6;
 			offset.y = 1;
 			acceleration.y = 300;

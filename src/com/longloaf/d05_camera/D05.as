@@ -4,7 +4,10 @@ package com.longloaf.d05_camera
 	import com.longloaf.DemoPrompt;
 	import org.flixel.FlxCamera;
 	import org.flixel.FlxG;
+	import org.flixel.FlxGroup;
+	import org.flixel.FlxObject;
 	import org.flixel.FlxPoint;
+	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxTilemap;
 	/**
@@ -25,6 +28,7 @@ package com.longloaf.d05_camera
 		private var help:DemoHelp;
 		
 		private var tileMap:FlxTilemap;
+		private var spikeGroup:FlxGroup;
 		
 		private var player:D05_Player;
 		private var point:FlxPoint;
@@ -42,9 +46,12 @@ package com.longloaf.d05_camera
 			tileMap.x = (FlxG.width - tileMap.width) / 2;
 			tileMap.y = 104 - tileMap.height;
 			
+			spikeGroup = new FlxGroup();
+			
 			player = new D05_Player();
 			player.x = tileMap.x + 4 * TILE_SIZE;
 			player.y = tileMap.y + 3 * TILE_SIZE;
+			moveSprite(player, 1, 0);
 			point = new FlxPoint();
 			
 			cam1 = new FlxCamera(40, 236, 80, 80, 4);
@@ -56,9 +63,13 @@ package com.longloaf.d05_camera
 			FlxG.addCamera(cam2);
 			
 			add(tileMap);
+			add(spikeGroup);
 			add(player);
 			add(help);
 			add(new DemoPrompt("Camera"));
+			
+			makeSpikes(2, 8, 6);
+			makeSpikes(11, 8, 6);
 		}
 		
 		override public function update():void 
@@ -75,6 +86,7 @@ package com.longloaf.d05_camera
 			}
 			super.update();
 			FlxG.collide(player, tileMap);
+			FlxG.overlap(player, spikeGroup, ovPlayerSpikes);
 			
 			var roomWidth:Number = cam2.width - TILE_SIZE;
 			var x0:Number = tileMap.x + HALF_TILE;
@@ -83,6 +95,27 @@ package com.longloaf.d05_camera
 			point.x = x0 + (int(point.x / roomWidth) + 0.5) * roomWidth;
 			point.y = tileMap.y + cam2.height * 0.5;
 			cam2.focusOn(point);
+		}
+		
+		private function ovPlayerSpikes(o1:FlxObject, o2:FlxObject):void
+		{
+			player.kill();
+		}
+		
+		private function moveSprite(s:FlxSprite, tx:int, ty:int):void
+		{
+			s.last.x = s.x = tileMap.x + tx * TILE_SIZE + (TILE_SIZE - s.width) * 0.5;
+			s.last.y = s.y = tileMap.y + (ty + 1) * TILE_SIZE - s.height;
+		}
+		
+		private function makeSpikes(tx:int, ty:int, num:int):void
+		{
+			for (var i:int = 0; i < num; ++i) {
+				var s:D05_Spikes = new D05_Spikes();
+				moveSprite(s, tx, ty);
+				spikeGroup.add(s);
+				++tx;
+			}
 		}
 		
 	}
