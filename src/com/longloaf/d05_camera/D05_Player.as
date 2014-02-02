@@ -9,15 +9,31 @@ package com.longloaf.d05_camera
 	 */
 	public class D05_Player extends FlxSprite
 	{
+		[Embed(source = "player_8x8_4.png")]
+		private static const Img:Class;
+		
 		public var accx:Number = 200;
 		public var dragx:Number = 200;
 		public var jmpv:Number = -80;
 		
+		private const STOP_ANIM:String = "stop";
+		private const RUN_ANIM:String = "run";
+		private const JUMP_ANIM:String = "jump";
+		
 		public function D05_Player() 
 		{
-			makeGraphic(6, 7, FlxU.makeColorFromHSB(340, 0.3, 1));
+			loadGraphic(Img, true, false, 8, 8);
+			
+			width = 4;
+			offset.x = 2;
 			height = 6;
-			offset.y = 1;
+			offset.y = 2;
+			
+			addAnimation(STOP_ANIM, [0]);
+			addAnimation(RUN_ANIM, [0, 1, 0, 2], 10);
+			addAnimation(JUMP_ANIM, [0, 3], 10);
+			play(STOP_ANIM);
+			
 			acceleration.y = 300;
 			maxVelocity.x = 40;
 			maxVelocity.y = 100;
@@ -43,16 +59,15 @@ package com.longloaf.d05_camera
 				if (FlxG.keys.justPressed("UP")) {
 					velocity.y += jmpv;
 				}
+				if (acceleration.x == 0) {
+					play(STOP_ANIM);
+				} else {
+					play(RUN_ANIM);
+				}
 			} else {
 				drag.x = 0;
+				play(JUMP_ANIM);
 			}
-			
-			// Не работает. Неверно потому, что скорость после столкновения обнуляется.
-			/*
-			if (justTouched(CEILING)) {
-				velocity.y *= -1;
-			}
-			*/
 		}
 		
 	}
