@@ -8,22 +8,50 @@ package com.longloaf.d05_camera
 	 */
 	public class D05_LavaBall extends D05_Lava
 	{
+		[Embed(source = "lava_ball_4x4_3.png")]
+		private static const Img:Class;
+		
 		private var interval:Number;
+		private var delay:Number;
+		private var delayFlag:Boolean;
+		
+		private var time:Number;
 		
 		public function D05_LavaBall(t:Number, d:Number) 
 		{
-			makeGraphic(4, 4, 0xff000000);
+			//makeGraphic(4, 4);
+			loadGraphic(Img, true, false, 4, 4);
+			width = 2;
+			offset.x = 1;
+			
+			addAnimation("1", [0, 1, 2, 1], 10);
+			play("1");
+			
 			interval = t;
-			var timer:FlxTimer = new FlxTimer();
-			timer.start(d, 1, startJump);
+			delay = d;
+			delayFlag = true;
+			time = 0;
 		}
 		
-		private function startJump(timer:FlxTimer):void
+		override public function update():void 
 		{
-			timer.start(interval, 0, jump);
+			super.update();
+			time += FlxG.elapsed;
+			if (delayFlag) {
+				if (time > delay) {
+					time -= delay;
+					delayFlag = false;
+					jump();
+				}
+			} else {
+				if (time > interval) {
+					time -= interval;
+					jump();
+				}
+			}
 		}
 		
-		private function jump(timer:FlxTimer):void
+		private function jump():void
 		{
 			velocity.y -= 150;
 		}

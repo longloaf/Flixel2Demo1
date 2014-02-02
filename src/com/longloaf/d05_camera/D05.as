@@ -73,18 +73,21 @@ package com.longloaf.d05_camera
 			makeLavaLiquid(2, 8, 6);
 			makeLavaLiquid(11, 8, 6);
 			
-			makeLavaBall(2, 8, 4, 1);
-			makeLavaBall(3, 8, 4, 2);
-			makeLavaBall(6, 8, 3);
-			makeLavaBall(7, 8, 3);
+			makeLavaBall(2, 8, 2);
+			makeLavaBall(3, 8, 2);
+			makeLavaBall(6, 8, 2, 0.5);
+			makeLavaBall(7, 8, 2, 1.5);
+			
+			makeLavaBall(11, 8, 2, 0.2);
+			makeLavaBall(12, 8, 2, 0.4);
+			makeLavaBall(14, 8, 2, 0.6);
+			makeLavaBall(15, 8, 2, 0.8);
+			makeLavaBall(16, 8, 2, 1.0);
 		}
 		
 		override public function update():void 
 		{
-			if (FlxG.keys.justPressed("Z")) {
-				cam1.shake();
-				cam2.shake();
-			} else if (FlxG.keys.justPressed("X")) {
+			if (FlxG.keys.justPressed("X")) {
 				cam1.flash();
 				cam2.flash();
 			} else if (FlxG.keys.justPressed("C")) {
@@ -108,6 +111,8 @@ package com.longloaf.d05_camera
 		private function ovPlayer(o1:FlxObject, o2:FlxObject):void
 		{
 			player.kill();
+			cam1.shake();
+			cam2.shake();
 		}
 		
 		private function moveSprite(s:FlxSprite, tx:int, ty:int):void
