@@ -12,12 +12,17 @@ package com.longloaf.d02_collision
 	{
 		private const MAX_VEL:Number = 500;
 		
+		private const MIN_SIZE:int = 4;
+		private const MAX_SIZE:int = 20;
+		
 		public function D02_Sprite() 
 		{
-			makeGraphic(10, 10, 0xFFFFFFFF);
-			var h:int = Rnd.range( -100, 100);
-			if (h < 0) h += 360;
-			color = FlxU.makeColorFromHSB(uint(h), 0.8, 0.8);
+			var w:int = int(Rnd.range(MIN_SIZE, MAX_SIZE)) + 1;
+			var h:int = int(Rnd.range(MIN_SIZE, MAX_SIZE)) + 1;
+			makeGraphic(w, h, 0xFFFFFFFF);
+			var hue:int = Rnd.range( -100, 100);
+			if (hue < 0) hue += 360;
+			color = FlxU.makeColorFromHSB(uint(hue), 0.8, 0.8);
 			
 			var v:Number = Rnd.rnd(MAX_VEL);
 			var a:Number = Rnd.angleRad();
