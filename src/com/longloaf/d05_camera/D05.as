@@ -3,6 +3,7 @@ package com.longloaf.d05_camera
 	import com.longloaf.DemoHelp;
 	import com.longloaf.DemoPrompt;
 	import org.flixel.FlxCamera;
+	import org.flixel.FlxEmitter;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxObject;
@@ -11,6 +12,7 @@ package com.longloaf.d05_camera
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxTilemap;
+	import org.flixel.FlxU;
 	/**
 	 * ...
 	 * @author Maksim Soldatov
@@ -34,6 +36,7 @@ package com.longloaf.d05_camera
 		private var gold:D05_Gold;
 		
 		private var player:D05_Player;
+		private var bloodEmitter:D05_BloodEmitter;
 		private var point:FlxPoint;
 		
 		private var cam1:FlxCamera;
@@ -44,7 +47,7 @@ package com.longloaf.d05_camera
 		override public function create():void 
 		{
 			help = new DemoHelp();
-			help.addText("[ARROWS] - move");
+			help.addText("[ARROWS]");
 			
 			tileMap = new FlxTilemap();
 			tileMap.loadMap(FlxTilemap.imageToCSV(Map), Tiles, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0);
@@ -59,6 +62,9 @@ package com.longloaf.d05_camera
 			player.x = tileMap.x + 4 * TILE_SIZE;
 			player.y = tileMap.y + 3 * TILE_SIZE;
 			moveSprite(player, 1, 0);
+			
+			bloodEmitter = new D05_BloodEmitter(player.width, player.height, 100);
+			
 			point = new FlxPoint();
 			
 			gold = new D05_Gold();
@@ -73,6 +79,7 @@ package com.longloaf.d05_camera
 			
 			add(tileMap);
 			add(player);
+			add(bloodEmitter);
 			add(lavaGroup);
 			add(enemyGroup);
 			add(gold);
@@ -116,6 +123,7 @@ package com.longloaf.d05_camera
 		{
 			super.update();
 			FlxG.collide(player, tileMap);
+			FlxG.collide(bloodEmitter, tileMap);
 			FlxG.collide(lavaGroup, tileMap);
 			FlxG.collide(enemyGroup, tileMap);
 			FlxG.collide(gold, tileMap);
@@ -135,6 +143,8 @@ package com.longloaf.d05_camera
 		private function ovPlayer(o1:FlxObject, o2:FlxObject):void
 		{
 			player.kill();
+			bloodEmitter.at(player);
+			bloodEmitter.start(true);
 			cam1.shake();
 			cam2.shake();
 		}

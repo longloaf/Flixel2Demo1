@@ -26,8 +26,8 @@ package com.longloaf.d05_camera
 			
 			width = 4;
 			offset.x = 2;
-			height = 6;
-			offset.y = 2;
+			height = 5;
+			offset.y = 3;
 			
 			addAnimation(STOP_ANIM, [0]);
 			addAnimation(RUN_ANIM, [0, 1, 0, 2], 10);

@@ -10,8 +10,6 @@ package com.longloaf.d05_camera
 		public function D05_LavaLiquid() 
 		{
 			makeGraphic(8, 8);
-			height = 4;
-			offset.y = 4;
 		}
 		
 	}
