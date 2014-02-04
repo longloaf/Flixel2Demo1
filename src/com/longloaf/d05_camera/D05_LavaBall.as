@@ -19,7 +19,6 @@ package com.longloaf.d05_camera
 		
 		public function D05_LavaBall(t:Number, d:Number) 
 		{
-			//makeGraphic(4, 4);
 			loadGraphic(Img, true, false, 4, 4);
 			width = 2;
 			offset.x = 1;
@@ -37,23 +36,25 @@ package com.longloaf.d05_camera
 		{
 			super.update();
 			time += FlxG.elapsed;
-			if (delayFlag) {
-				if (time > delay) {
-					time -= delay;
-					delayFlag = false;
-					jump();
-				}
-			} else {
-				if (time > interval) {
-					time -= interval;
-					jump();
+			if (isTouching(FLOOR)) {
+				if (delayFlag) {
+					if (time > delay) {
+						time = 0;
+						delayFlag = false;
+						jump();
+					}
+				} else {
+					if (time > interval) {
+						time = 0;
+						jump();
+					}
 				}
 			}
 		}
 		
 		private function jump():void
 		{
-			velocity.y -= 150;
+			velocity.y = -150;
 		}
 		
 	}

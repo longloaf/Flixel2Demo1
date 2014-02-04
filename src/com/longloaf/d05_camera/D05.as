@@ -6,6 +6,7 @@ package com.longloaf.d05_camera
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxObject;
+	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
@@ -29,6 +30,8 @@ package com.longloaf.d05_camera
 		
 		private var tileMap:FlxTilemap;
 		private var lavaGroup:FlxGroup;
+		private var enemyGroup:FlxGroup;
+		private var gold:D05_Gold;
 		
 		private var player:D05_Player;
 		private var point:FlxPoint;
@@ -50,15 +53,19 @@ package com.longloaf.d05_camera
 			
 			lavaGroup = new FlxGroup();
 			
+			enemyGroup = new FlxGroup();
+			
 			player = new D05_Player();
 			player.x = tileMap.x + 4 * TILE_SIZE;
 			player.y = tileMap.y + 3 * TILE_SIZE;
 			moveSprite(player, 1, 0);
 			point = new FlxPoint();
 			
+			gold = new D05_Gold();
+			
 			cam1 = new FlxCamera(40, 236, 80, 80, 4);
 			cam1.follow(player);
-			tileMap.follow(cam1);
+			tileMap.follow(cam1, 0, false);
 			FlxG.addCamera(cam1);
 			
 			cam2 = new FlxCamera(440, 236, 80, 80, 4);
@@ -67,6 +74,8 @@ package com.longloaf.d05_camera
 			add(tileMap);
 			add(player);
 			add(lavaGroup);
+			add(enemyGroup);
+			add(gold);
 			add(help);
 			add(new DemoPrompt("Camera"));
 			
@@ -83,21 +92,36 @@ package com.longloaf.d05_camera
 			makeLavaBall(14, 8, 2, 0.6);
 			makeLavaBall(15, 8, 2, 0.8);
 			makeLavaBall(16, 8, 2, 1.0);
+			
+			var path:FlxPath = new FlxPath();
+			addPoint(path, 29, 2);
+			addPoint(path, 33, 2);
+			makeEnemy01(29, 2, 30, path);
+			
+			path = new FlxPath();
+			addPoint(path, 30, 5);
+			addPoint(path, 35, 5);
+			makeEnemy01(35, 5, 30, path);
+			
+			path = new FlxPath();
+			addPoint(path, 28, 8);
+			addPoint(path, 35, 8);
+			makeEnemy01(28, 8, 30, path);
+			makeEnemy01(35, 8, 30, path);
+			
+			moveSprite(gold, 43, 5);
 		}
 		
 		override public function update():void 
 		{
-			if (FlxG.keys.justPressed("X")) {
-				cam1.flash();
-				cam2.flash();
-			} else if (FlxG.keys.justPressed("C")) {
-				cam1.fade(0xff000000, 1, cam1.stopFX);
-				cam2.fade(0xff000000, 1, cam2.stopFX);
-			}
 			super.update();
 			FlxG.collide(player, tileMap);
 			FlxG.collide(lavaGroup, tileMap);
+			FlxG.collide(enemyGroup, tileMap);
+			FlxG.collide(gold, tileMap);
 			FlxG.overlap(player, lavaGroup, ovPlayer);
+			FlxG.overlap(player, enemyGroup, ovPlayer);
+			FlxG.overlap(player, gold, ovPlayerGold);
 			
 			var roomWidth:Number = cam2.width - TILE_SIZE;
 			var x0:Number = tileMap.x + HALF_TILE;
@@ -113,6 +137,13 @@ package com.longloaf.d05_camera
 			player.kill();
 			cam1.shake();
 			cam2.shake();
+		}
+		
+		private function ovPlayerGold(o1:FlxObject, o2:FlxObject):void
+		{
+			gold.kill();
+			cam1.flash();
+			cam2.flash();
 		}
 		
 		private function moveSprite(s:FlxSprite, tx:int, ty:int):void
@@ -136,6 +167,19 @@ package com.longloaf.d05_camera
 			var s:D05_LavaBall = new D05_LavaBall(interval, delay)
 			moveSprite(s, tx, ty);
 			lavaGroup.add(s);
+		}
+		
+		private function makeEnemy01(tx:int, ty:int, v:Number, path:FlxPath):void
+		{
+			var s:D05_Enemy01 = new D05_Enemy01();
+			moveSprite(s, tx, ty);
+			s.followPath(path, v, FlxObject.PATH_LOOP_FORWARD | FlxObject.PATH_HORIZONTAL_ONLY);
+			enemyGroup.add(s);
+		}
+		
+		private function addPoint(path:FlxPath, tx:int, ty:int):void
+		{
+			path.add(tileMap.x + (tx + 0.5) * TILE_SIZE, tileMap.y + (ty + 0.5) * TILE_SIZE);
 		}
 		
 	}
