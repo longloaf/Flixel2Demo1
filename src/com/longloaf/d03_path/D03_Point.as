@@ -17,6 +17,9 @@ package com.longloaf.d03_path
 		
 		public var point:FlxPoint;
 		
+		public var prev:D03_Point = null;
+		public var next:D03_Point = null;
+		
 		public function D03_Point() 
 		{
 			loadGraphic(Img, true, false, 10, 10);
