@@ -3,17 +3,20 @@ package com.longloaf.d03_path
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;
+	import org.flixel.FlxU;
 	/**
 	 * ...
 	 * @author Maksim Soldatov
 	 */
 	public class D03_Point extends FlxSprite
 	{
-		[Embed(source = "point_10x10_2.png")]
+		[Embed(source = "point_10x10_4.png")]
 		private static const Img:Class;
 		
 		public static const UNSELECTED:int = 0;
-		public static const SELECTED:int = 1;
+		public static const PREV:int = 1;
+		public static const SELECTED:int = 2;
+		public static const NEXT:int = 3;
 		
 		public var point:FlxPoint;
 		
@@ -24,7 +27,7 @@ package com.longloaf.d03_path
 		{
 			loadGraphic(Img, true, false, 10, 10);
 			
-			frame = SELECTED;
+			frame = UNSELECTED;
 			
 			point = new FlxPoint();
 			

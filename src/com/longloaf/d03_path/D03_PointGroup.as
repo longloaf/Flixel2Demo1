@@ -16,8 +16,8 @@ package com.longloaf.d03_path
 		
 		private var selected:D03_Point;
 		
-		private var prevSpr:FlxSprite;
-		private var nextSpr:FlxSprite;
+		private var edges:FlxSprite;
+		private var pointGroup:FlxGroup;
 		
 		private var mouse:FlxPoint;
 		private var mouseOffset:FlxPoint;
@@ -25,38 +25,36 @@ package com.longloaf.d03_path
 		
 		public function D03_PointGroup() 
 		{
+			edges = new FlxSprite();
+			edges.makeGraphic(FlxG.width, FlxG.height, 0, true);
+			add(edges);
+			
+			pointGroup = new FlxGroup();
+			add(pointGroup);
+			
 			path = new FlxPath();
-			
-			prevSpr = new FlxSprite();
-			prevSpr.makeGraphic(30, 30, 0x40FF0000);
-			add(prevSpr);
-			
-			nextSpr = new FlxSprite();
-			nextSpr.makeGraphic(40, 40, 0x4000FF00);
-			add(nextSpr);
 			
 			selected = new D03_Point();
 			selected.prev = selected.next = selected;
 			selected.move(FlxG.width / 2, FlxG.height / 2);
-			add(selected);
+			selected.frame = D03_Point.SELECTED;
+			pointGroup.add(selected);
 			
 			path.addPoint(selected.point, true);
 			
 			mouse = new FlxPoint();
 			mouseOffset = new FlxPoint();
 			drag = false;
-			
-			updatePrevNext();
 		}
 		
 		override public function update():void 
 		{
 			mouse.make(FlxG.mouse.x, FlxG.mouse.y);
-			var id:int;
+			
 			if (FlxG.mouse.justPressed()) {
 				var s:D03_Point = null;
-				for (var i:int = length - 1; i >= 0; --i) {
-					var p:D03_Point = members[i] as D03_Point;
+				for (var i:int = pointGroup.length - 1; i >= 0; --i) {
+					var p:D03_Point = pointGroup.members[i] as D03_Point;
 					if ((p != null) && p.overlapsPoint(mouse)) {
 						s = p;
 						break;
@@ -73,7 +71,6 @@ package com.longloaf.d03_path
 			
 			if (drag) {
 				selected.move(mouse.x - mouseOffset.x, mouse.y - mouseOffset.y);
-				updatePrevNext();
 			} else {
 				if (FlxG.keys.justPressed("N")) {
 					addPoint(mouse.x, mouse.y);
@@ -83,15 +80,24 @@ package com.longloaf.d03_path
 			}
 			
 			super.update();
+			
+			edges.fill(0);
+			var temp:D03_Point = selected;
+			do {
+				edges.drawLine(temp.point.x, temp.point.y, temp.next.point.x, temp.next.point.y, 0x30FFFFFF, 1);
+				temp = temp.next;
+			} while (temp != selected);
 		}
 		
 		private function setSelected(p:D03_Point):void
 		{
+			selected.prev.frame = D03_Point.UNSELECTED;
+			selected.next.frame = D03_Point.UNSELECTED;
 			selected.frame = D03_Point.UNSELECTED;
 			selected = p;
+			selected.prev.frame = D03_Point.PREV;
+			selected.next.frame = D03_Point.NEXT;
 			selected.frame = D03_Point.SELECTED;
-			
-			updatePrevNext();
 		}
 		
 		private function selectedID():int
@@ -110,7 +116,7 @@ package com.longloaf.d03_path
 			selected.next = p;
 			path.addPointAt(p.point, selectedID() + 1, true);
 			setSelected(p);
-			add(p);
+			pointGroup.add(p);
 		}
 		
 		private function removeSelected():void
@@ -123,12 +129,6 @@ package com.longloaf.d03_path
 			path.remove(selected.point);
 			selected.kill();
 			setSelected(n);
-		}
-		
-		private function updatePrevNext():void
-		{
-			at(prevSpr, selected.prev);
-			at(nextSpr, selected.next);
 		}
 		
 		private function at(s1:FlxSprite, s2:FlxSprite):void {
