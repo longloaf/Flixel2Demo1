@@ -18,7 +18,7 @@ package com.longloaf.d02_collision
 	 */
 	public class D02 extends FlxState
 	{
-		private const IMMOVABLE_COLOR:uint = FlxU.makeColorFromHSB(0, 0, 0.2);
+		private const IMMOVABLE_COLOR:uint = FlxU.makeColorFromHSB(0, 0, 0.3);
 		private const IMMOVABLE_WIDTH:Number = 15;
 		
 		private var immovableGroup:FlxGroup;

@@ -7,14 +7,20 @@ package com.longloaf.d03_path
 	 */
 	public class D03_Sprite extends FlxSprite
 	{
-		[Embed(source = "imgs_20x20_5.png")]
-		private static const Img:Class;
+		//[Embed(source = "imgs_20x20_5.png")] private static const Img:Class;
+		
+		[Embed(source = "imgs_5x4_5.png")] private static const Img:Class;
+		
+		
 		
 		public static const FRAME_NUM:int = 5;
 		
 		public function D03_Sprite() 
 		{
-			loadGraphic(Img, true, false, 20, 20);
+			//loadGraphic(Img, true, false, 20, 20);
+			loadGraphic(Img, true, false, 5, 4);
+			scale.x = 3;
+			scale.y = 6;
 		}
 		
 		public function setFrame(f:int):void

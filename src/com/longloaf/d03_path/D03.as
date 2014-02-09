@@ -23,7 +23,7 @@ package com.longloaf.d03_path
 		
 		override public function create():void 
 		{
-			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0.5);
+			FlxG.bgColor = FlxU.makeColorFromHSB(60, 0.5, 0.9);
 			
 			help = new DemoHelp();
 			help.addText("[MOUSE] - select and drag points");

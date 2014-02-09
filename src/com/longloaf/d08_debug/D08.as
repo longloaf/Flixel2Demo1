@@ -41,17 +41,12 @@ package com.longloaf.d08_debug
 			FlxG.watch(player.maxVelocity, "x", "maxVelX");
 			FlxG.watch(player.maxVelocity, "y", "maxVelY");
 			FlxG.watch(player, "jumpVel", "jumpVel");
-			FlxG.watch(player, "wallJumpVelX", "wallJumpVelX");
-			FlxG.watch(player, "wallJumpVelY", "wallJumpVelY");
-			FlxG.watch(player, "wallVel", "wallVel");
 			FlxG.watch(player, "floorDrag", "floorDrag");
 			
 			add(map);
 			add(player);
 			add(help);
 			add(new DemoPrompt("Debug"));
-			
-			FlxG.setDebuggerLayout(FlxG.DEBUGGER_BIG);
 		}
 		
 		override public function update():void 

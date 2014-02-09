@@ -84,7 +84,7 @@ package com.longloaf.d03_path
 			edges.fill(0);
 			var temp:D03_Point = selected;
 			do {
-				edges.drawLine(temp.point.x, temp.point.y, temp.next.point.x, temp.next.point.y, 0x30FFFFFF, 1);
+				edges.drawLine(temp.point.x, temp.point.y, temp.next.point.x, temp.next.point.y, 0x30000000, 1);
 				temp = temp.next;
 			} while (temp != selected);
 		}
