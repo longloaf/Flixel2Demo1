@@ -6,6 +6,7 @@ package com.longloaf.d09_sort
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxU;
 	/**
 	 * ...
 	 * @author Maksim Soldatov
@@ -19,6 +20,8 @@ package com.longloaf.d09_sort
 		
 		override public function create():void 
 		{
+			FlxG.bgColor = FlxU.makeColorFromHSB(25, 0.2, 0.9);
+			
 			help = new DemoHelp();
 			help.addText("[1] - add 10 sprites");
 			help.addText("[2] - add 100 sprites");

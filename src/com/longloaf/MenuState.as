@@ -11,6 +11,7 @@ package com.longloaf
 	import com.longloaf.d09_sort.D09;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
+	import org.flixel.FlxU;
 	/**
 	 * Главное меню. Содержит список демонстраций.
 	 * @author Maksim Soldatov
@@ -31,6 +32,8 @@ package com.longloaf
 		
 		override public function create():void 
 		{
+			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0.1);
+			
 			for (var i:int = 0; i < demos.length; ++i) {
 				var d:DemoData = demos[i];
 				var b:DemoButton = new DemoButton(10, 10 + i * 25, d.name, d.demoClass);

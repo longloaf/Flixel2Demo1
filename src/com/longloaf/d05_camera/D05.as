@@ -46,6 +46,8 @@ package com.longloaf.d05_camera
 		
 		override public function create():void 
 		{
+			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0);
+			
 			help = new DemoHelp();
 			help.addText("[ARROWS]");
 			

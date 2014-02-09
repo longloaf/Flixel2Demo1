@@ -10,6 +10,7 @@ package com.longloaf.d03_path
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxTilemap;
+	import org.flixel.FlxU;
 	/**
 	 * ...
 	 * @author Maksim Soldatov
@@ -22,6 +23,8 @@ package com.longloaf.d03_path
 		
 		override public function create():void 
 		{
+			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0.5);
+			
 			help = new DemoHelp();
 			help.addText("[MOUSE] - select and drag points");
 			help.addText("[N] - add new point");
