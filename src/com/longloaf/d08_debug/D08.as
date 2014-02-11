@@ -16,7 +16,7 @@ package com.longloaf.d08_debug
 		[Embed(source = "map.png")]
 		private static const Map:Class;
 		
-		[Embed(source = "tiles.png")]
+		[Embed(source = "tiles_16x16_auto.png")]
 		private static const Tiles:Class;
 		
 		public const TILE_SIZE:int = 16;

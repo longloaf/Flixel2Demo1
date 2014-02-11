@@ -10,38 +10,27 @@ package com.longloaf.d08_debug
 	 */
 	public class D08_Player extends FlxSprite
 	{
-		[Embed(source = "player_10x10_3.png")]
+		[Embed(source="player_16x16_8.png")]
 		private static const Img:Class;
-		
-		[Embed(source = "testImg_16x16_6.png")]
-		private static const TestImg:Class;
 		
 		public var grav:Number = 500;
 		public var acc:Number = 400;
 		public var floorDrag:Number = 200;
 		public var jumpVel:Number = -220;
 		
-		private const STOP_ANIM:String = "stop";
-		private const RUN_ANIM:String = "run";
+		private const MOVE_ANIM:String = "move";
 		private const JUMP_ANIM:String = "jump";
 		
 		public function D08_Player() 
 		{	
-			/*
-			loadGraphic(Img, true, true, 10, 10);
+			loadGraphic(Img, true, true, 16, 16);
+			//addAnimation(MOVE_ANIM, [0, 1, 2, 3, 2, 1], 10);
+			addAnimation(MOVE_ANIM, [0, 1, 2, 3, 4, 5, 6, 7], 10);
+			addAnimation(JUMP_ANIM, [4, 5, 6, 7, 6, 5, 4], 20);
 			width = 8;
-			offset.x = 1;
+			offset.x = 4;
 			
-			addAnimation(STOP_ANIM, [0]);
-			addAnimation(RUN_ANIM, [0, 1, 2, 1], 10);
-			addAnimation(JUMP_ANIM, [2]);
-			
-			play(STOP_ANIM);
-			*/
-			
-			loadGraphic(TestImg, true, false, 16, 16);
-			addAnimation("1", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1], 5);
-			play("1");
+			play(MOVE_ANIM);
 			
 			maxVelocity.x = 100;
 			maxVelocity.y = 300;
@@ -52,11 +41,11 @@ package com.longloaf.d08_debug
 			acceleration.x = 0;
 			if (FlxG.keys.LEFT) {
 				acceleration.x -= acc;
-				facing = LEFT;
+				facing = RIGHT;
 			}
 			if (FlxG.keys.RIGHT) {
 				acceleration.x += acc;
-				facing = RIGHT;
+				facing = LEFT;
 			}
 			
 			acceleration.y = grav;
@@ -66,13 +55,7 @@ package com.longloaf.d08_debug
 				if (FlxG.keys.justPressed("UP")) {
 					velocity.y += jumpVel;
 				}
-				/*
-				if (acceleration.x == 0) {
-					play(STOP_ANIM);
-				} else {
-					play(RUN_ANIM);
-				}
-				*/
+				//play(MOVE_ANIM);
 			} else {
 				drag.x = 0;
 				//play(JUMP_ANIM);
