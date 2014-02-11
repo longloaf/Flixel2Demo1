@@ -28,7 +28,7 @@ package com.longloaf.d04_pathfinding
 		public function D04_Sprite(map:FlxTilemap, mSpr:FlxSprite) 
 		{
 			var h:Number = 100 + Rnd.range( -70, 70);
-			makeGraphic(6, 6, FlxU.makeColorFromHSB(h, 0.6, 0.6));
+			makeGraphic(6, 6, FlxU.makeColorFromHSB(h, 0.5, 0.6));
 			
 			tileMap = map;
 			mouseSprite = mSpr;

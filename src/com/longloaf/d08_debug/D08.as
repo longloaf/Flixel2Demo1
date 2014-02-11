@@ -6,17 +6,20 @@ package com.longloaf.d08_debug
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxTilemap;
+	import org.flixel.FlxU;
 	/**
 	 * ...
 	 * @author Maksim Soldatov
 	 */
 	public class D08 extends FlxState
 	{
-		[Embed(source = "map.txt", mimeType = "application/octet-stream")]
+		[Embed(source = "map.png")]
 		private static const Map:Class;
 		
 		[Embed(source = "tiles.png")]
 		private static const Tiles:Class;
+		
+		public const TILE_SIZE:int = 16;
 		
 		private var help:DemoHelp;
 		
@@ -28,10 +31,12 @@ package com.longloaf.d08_debug
 		
 		override public function create():void 
 		{
+			FlxG.bgColor = 0xFF32383F;
+			
 			help = new DemoHelp();
 			
 			map = new FlxTilemap();
-			map.loadMap(new Map(), Tiles, 10, 10, FlxTilemap.OFF, 0, 0);
+			map.loadMap(FlxTilemap.imageToCSV(Map), Tiles, 0, 0, FlxTilemap.AUTO);
 			
 			player = new D08_Player();
 			player.x = player.y = 100;
