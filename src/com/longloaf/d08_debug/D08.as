@@ -31,7 +31,7 @@ package com.longloaf.d08_debug
 		
 		override public function create():void 
 		{
-			FlxG.bgColor = 0xFF32383F;
+			FlxG.bgColor = 0xFFF0BE4C;
 			
 			help = new DemoHelp();
 			

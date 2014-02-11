@@ -13,6 +13,9 @@ package com.longloaf.d08_debug
 		[Embed(source = "player_10x10_3.png")]
 		private static const Img:Class;
 		
+		[Embed(source = "testImg_16x16_6.png")]
+		private static const TestImg:Class;
+		
 		public var grav:Number = 500;
 		public var acc:Number = 400;
 		public var floorDrag:Number = 200;
@@ -23,9 +26,8 @@ package com.longloaf.d08_debug
 		private const JUMP_ANIM:String = "jump";
 		
 		public function D08_Player() 
-		{
-			//makeGraphic(8, 10, 0xFF000000);
-			
+		{	
+			/*
 			loadGraphic(Img, true, true, 10, 10);
 			width = 8;
 			offset.x = 1;
@@ -35,6 +37,11 @@ package com.longloaf.d08_debug
 			addAnimation(JUMP_ANIM, [2]);
 			
 			play(STOP_ANIM);
+			*/
+			
+			loadGraphic(TestImg, true, false, 16, 16);
+			addAnimation("1", [0, 1, 2, 3, 4, 5, 4, 3, 2, 1], 5);
+			play("1");
 			
 			maxVelocity.x = 100;
 			maxVelocity.y = 300;
@@ -59,14 +66,16 @@ package com.longloaf.d08_debug
 				if (FlxG.keys.justPressed("UP")) {
 					velocity.y += jumpVel;
 				}
+				/*
 				if (acceleration.x == 0) {
 					play(STOP_ANIM);
 				} else {
 					play(RUN_ANIM);
 				}
+				*/
 			} else {
 				drag.x = 0;
-				play(JUMP_ANIM);
+				//play(JUMP_ANIM);
 			}
 		}
 		
