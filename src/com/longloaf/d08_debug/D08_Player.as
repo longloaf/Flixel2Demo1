@@ -14,9 +14,9 @@ package com.longloaf.d08_debug
 		private static const Img:Class;
 		
 		public var grav:Number = 500;
-		public var acc:Number = 300;// 20;
-		public var floorDrag:Number = 300;// 10;
-		public var jumpVel:Number = -300;// -250;
+		public var acc:Number = 50;// 300;
+		public var floorDrag:Number = 10;// 300;
+		public var jumpVel:Number = -250;// -300;
 		
 		private const STOP_ANIM:String = "stop";
 		private const RUN_ANIM:String = "run";

@@ -8,6 +8,7 @@ package com.longloaf.d08_debug
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
+	import org.flixel.FlxTileblock;
 	import org.flixel.FlxTilemap;
 	import org.flixel.FlxU;
 	/**
@@ -22,7 +23,7 @@ package com.longloaf.d08_debug
 		[Embed(source = "tiles_16x16_auto.png")]
 		private static const Tiles:Class;
 		
-		public const TILE_SIZE:int = 16;
+		public static const TILE_SIZE:int = 16;
 		
 		public const CENTER:int = 0;
 		public const LEFT:int = -1;
@@ -39,8 +40,8 @@ package com.longloaf.d08_debug
 		private var button:D08_Button;
 		
 		private var doorGroup:FlxGroup;
-		private var door01:D08_Door01;
-		private var door02:D08_Door02;
+		private var door01:D08_Door;
+		private var door02:D08_Door;
 		
 		private var debugLayoutOld:uint;
 		
@@ -49,6 +50,7 @@ package com.longloaf.d08_debug
 			FlxG.bgColor = 0xFFF0BE4C;
 			
 			help = new DemoHelp();
+			help.addText("[ARROWS]");
 			
 			map = new FlxTilemap();
 			map.loadMap(FlxTilemap.imageToCSV(Map), Tiles, 0, 0, FlxTilemap.AUTO);
@@ -65,11 +67,11 @@ package com.longloaf.d08_debug
 			
 			doorGroup = new FlxGroup();
 			
-			door01 = new D08_Door01();
+			door01 = new D08_Door(2);
 			moveToTile(door01, 5, 4);
 			doorGroup.add(door01);
 			
-			door02 = new D08_Door02();
+			door02 = new D08_Door(3);
 			moveToTile(door02, 21, 4);
 			door02.exists = false;
 			doorGroup.add(door02);
@@ -111,14 +113,14 @@ package com.longloaf.d08_debug
 		
 		private function moveToTile(s:FlxSprite, tx:int, ty:int, hAlign:int = LEFT, vAlign:int = TOP):void
 		{
-			s.x = tx * TILE_SIZE;
+			s.last.x = s.x = tx * TILE_SIZE;
 			if (hAlign == CENTER) {
 				s.x += (TILE_SIZE - s.width) * 0.5;
 			} else if (hAlign == RIGHT) {
 				s.x += TILE_SIZE - s.width;
 			}
 			
-			s.y = ty * TILE_SIZE;
+			s.last.y = s.y = ty * TILE_SIZE;
 			if (vAlign == CENTER) {
 				s.y += (TILE_SIZE - s.height) * 0.5;
 			} else if (vAlign == BOTTOM) {
