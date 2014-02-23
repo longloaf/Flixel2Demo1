@@ -13,10 +13,9 @@ package com.longloaf.d08_debug
 		[Embed(source = "player_16x16_5.png")]
 		private static const Img:Class;
 		
-		public var grav:Number = 500;
-		public var acc:Number = 50;// 300;
-		public var floorDrag:Number = 10;// 300;
-		public var jumpVel:Number = -250;// -300;
+		private var acc:Number = 300;
+		private var floorDrag:Number = 300;
+		private var _jumpVel:Number = -200;
 		
 		private const STOP_ANIM:String = "stop";
 		private const RUN_ANIM:String = "run";
@@ -34,8 +33,10 @@ package com.longloaf.d08_debug
 			
 			play(STOP_ANIM);
 			
-			maxVelocity.x = 100;
+			maxVelX = 20;
+			jumpVel = 200;
 			maxVelocity.y = 300;
+			acceleration.y = 500;
 		}
 		
 		override public function update():void 
@@ -50,12 +51,10 @@ package com.longloaf.d08_debug
 				facing = RIGHT;
 			}
 			
-			acceleration.y = grav;
-			
 			if (isTouching(FLOOR)) {
 				drag.x = floorDrag;
 				if (FlxG.keys.justPressed("UP")) {
-					velocity.y += jumpVel;
+					velocity.y -= _jumpVel;
 				}
 				if (acceleration.x != 0) {
 					play(RUN_ANIM);
@@ -66,6 +65,26 @@ package com.longloaf.d08_debug
 				drag.x = 0;
 				play(JUMP_ANIM);
 			}
+		}
+		
+		public function set maxVelX(v:Number):void
+		{
+			maxVelocity.x = FlxU.bound(v, 10, 500);
+		}
+		
+		public function get maxVelX():Number
+		{
+			return maxVelocity.x;
+		}
+		
+		public function set jumpVel(v:Number):void
+		{
+			_jumpVel = FlxU.bound(v, 50, 300);
+		}
+		
+		public function get jumpVel():Number
+		{
+			return _jumpVel;
 		}
 		
 	}

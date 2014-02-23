@@ -37,11 +37,13 @@ package com.longloaf.d08_debug
 		
 		private var player:D08_Player;
 		
-		private var button:D08_Button;
+		private var button01:D08_Button;
+		private var button02:D08_Button;
 		
 		private var doorGroup:FlxGroup;
 		private var door01:D08_Door;
 		private var door02:D08_Door;
+		private var door03:D08_Door;
 		
 		private var debugLayoutOld:uint;
 		
@@ -57,18 +59,24 @@ package com.longloaf.d08_debug
 			
 			player = new D08_Player();
 			player.x = player.y = 100;
-			moveToTile(player, 7, 6, CENTER, BOTTOM);
+			moveToTile(player, 9, 3, CENTER, BOTTOM);
 			
-			button = new D08_Button();
-			button.time = 15;
-			button.onButtonDown = buttonCallback;
-			button.onButtonUp = buttonCallback;
-			moveToTile(button, 14, 7, CENTER, BOTTOM);
+			button01 = new D08_Button();
+			button01.time = 8;
+			button01.onButtonDown = button01Callback;
+			button01.onButtonUp = button01Callback;
+			moveToTile(button01, 22, 16, CENTER, BOTTOM);
+			
+			button02 = new D08_Button();
+			button02.time = 5;
+			button02.onButtonDown = button02Callback;
+			button02.onButtonUp  = button02Callback;
+			moveToTile(button02, 17, 6, CENTER, BOTTOM);
 			
 			doorGroup = new FlxGroup();
 			
-			door01 = new D08_Door(2);
-			moveToTile(door01, 5, 4);
+			door01 = new D08_Door(3);
+			moveToTile(door01, 16, 4);
 			doorGroup.add(door01);
 			
 			door02 = new D08_Door(3);
@@ -76,18 +84,18 @@ package com.longloaf.d08_debug
 			door02.exists = false;
 			doorGroup.add(door02);
 			
-			FlxG.watch(player, "grav", "grav");
-			FlxG.watch(player, "acc", "acc");
-			FlxG.watch(player.maxVelocity, "x", "maxVelX");
-			FlxG.watch(player.maxVelocity, "y", "maxVelY");
+			door03 = new D08_Door(3);
+			moveToTile(door03, 16, 14);
+			doorGroup.add(door03);
+			
+			FlxG.watch(player, "maxVelX", "maxVelX");
 			FlxG.watch(player, "jumpVel", "jumpVel");
-			FlxG.watch(player, "floorDrag", "floorDrag");
 			
 			add(map);
 			add(player);
-			add(button);
-			add(door01);
-			add(door02);
+			add(button01);
+			add(button02);
+			add(doorGroup);
 			add(help);
 			add(new DemoPrompt("Debug"));
 		}
@@ -97,18 +105,24 @@ package com.longloaf.d08_debug
 			super.update();
 			FlxG.collide(player, map);
 			FlxG.collide(player, doorGroup);
-			FlxG.overlap(player, button, ovPlayerButton);
+			FlxG.overlap(player, button01, ovPlayerButton);
+			FlxG.overlap(player, button02, ovPlayerButton);
 		}
 		
 		private function ovPlayerButton(o1:FlxObject, o2:FlxObject):void
 		{
-			button.press();
+			(o2 as D08_Button).press();
 		}
 		
-		private function buttonCallback():void
+		private function button01Callback():void
 		{
 			door01.exists = !door01.exists;
+		}
+		
+		private function button02Callback():void
+		{
 			door02.exists = !door02.exists;
+			door03.exists = !door03.exists;
 		}
 		
 		private function moveToTile(s:FlxSprite, tx:int, ty:int, hAlign:int = LEFT, vAlign:int = TOP):void
