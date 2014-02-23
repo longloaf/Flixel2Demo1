@@ -2,9 +2,11 @@ package com.longloaf.d06_particles
 {
 	import com.longloaf.DemoHelp;
 	import com.longloaf.DemoPrompt;
+	import com.longloaf.Rnd;
 	import org.flixel.FlxEmitter;
 	import org.flixel.FlxG;
 	import org.flixel.FlxParticle;
+	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
 	import org.flixel.FlxText;
 	import org.flixel.FlxTilemap;
@@ -15,17 +17,18 @@ package com.longloaf.d06_particles
 	 */
 	public class D06 extends FlxState
 	{	
-		[Embed(source = "map.png")]
-		private static const Map:Class;
+		[Embed(source = "img01.png")]
+		private static const Img01:Class;
 		
-		[Embed(source = "tiles_16x16_2.png")]
-		private static const Tiles:Class;
+		[Embed(source = "img02.png")]
+		private static const Img02:Class;
 		
-		public static const TILE_SIZE:int = 16;
+		[Embed(source = "img03.png")]
+		private static const Img03:Class;
+		
+		private static const IMGS:Vector.<Class> = Vector.<Class>([Img01, Img02, Img03]);
 		
 		private var help:DemoHelp;
-		
-		private var tileMap:FlxTilemap;
 		
 		private var emitter:FlxEmitter;
 		
@@ -35,23 +38,24 @@ package com.longloaf.d06_particles
 			
 			help = new DemoHelp();
 			
-			tileMap = new FlxTilemap();
-			tileMap.loadMap(FlxTilemap.imageToCSV(Map), Tiles, TILE_SIZE, TILE_SIZE);
-			
-			emitter = new FlxEmitter(30, 50, 1000);
+			emitter = new FlxEmitter(0, 0, 100);
 			emitter.bounce = 0.9;
-			emitter.setRotation(0, 0);
-			emitter.setSize(TILE_SIZE, TILE_SIZE);
-			emitter.gravity = 500;
+			//emitter.setRotation(-90, 90);
+			emitter.setSize(100, 100);
+			emitter.x = (FlxG.width - emitter.width) / 2;
+			emitter.y = (FlxG.height - emitter.height) / 2;
+			//emitter.setXSpeed( -200, 200);
+			//emitter.setYSpeed( -200, 200);
+			//emitter.gravity = 500;
 			for (var i:int = 0; i < emitter.maxSize; ++i) {
 				var p:FlxParticle = new FlxParticle();
-				p.makeGraphic(1, 1, FlxU.makeColorFromHSB(30, 1, 1));
+				var img:Class = IMGS[int(Rnd.rnd(IMGS.length))];
+				p.loadGraphic(img)
 				p.exists = false;
 				emitter.add(p);
 			}
-			emitter.start(false, 0, 0.001);
+			emitter.start(false, 0, 0.02);// 0.001);
 			
-			add(tileMap);
 			add(emitter);
 			add(help);
 			add(new DemoPrompt("Particles"));
@@ -60,7 +64,6 @@ package com.longloaf.d06_particles
 		override public function update():void 
 		{
 			super.update();
-			FlxG.collide(emitter, tileMap);
 		}
 		
 	}

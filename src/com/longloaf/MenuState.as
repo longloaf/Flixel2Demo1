@@ -11,6 +11,7 @@ package com.longloaf
 	import com.longloaf.d09_sort.D09;
 	import org.flixel.FlxG;
 	import org.flixel.FlxState;
+	import org.flixel.FlxText;
 	import org.flixel.FlxU;
 	/**
 	 * Главное меню. Содержит список демонстраций.
@@ -34,9 +35,23 @@ package com.longloaf
 		{
 			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0.1);
 			
+			var text:FlxText = new FlxText(0, 20, FlxG.width, "FLIXEL 2.55 DEMO");
+			text.size = 16;
+			text.alignment = "center";
+			add(text);
+			
+			var y0:Number = text.y + text.height + 20;
+			var colNum:int = 4;
+			var rowNum:int = 7;
+			var colWidth:Number = FlxG.width / colNum;
+			var rowHeight:Number = 30;
 			for (var i:int = 0; i < demos.length; ++i) {
 				var d:DemoData = demos[i];
-				var b:DemoButton = new DemoButton(10, 10 + i * 25, d.name, d.demoClass);
+				var b:DemoButton = new DemoButton(0, 0, d.name, d.demoClass);
+				var row:int = i % rowNum;
+				var col:int = i / rowNum;
+				b.x = col * colWidth + (colWidth - b.width) * 0.5;
+				b.y = y0 + row * rowHeight;
 				add(b);
 			}
 		}

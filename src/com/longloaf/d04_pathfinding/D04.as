@@ -34,7 +34,7 @@ package com.longloaf.d04_pathfinding
 		override public function create():void 
 		{
 			help = new DemoHelp();
-			help.addText("Click to find path.");
+			help.addText("Click to find path");
 			help.addVSpace();
 			help.addText("[1] - add 10 sprites");
 			help.addText("[2] - add 100 sprites");
