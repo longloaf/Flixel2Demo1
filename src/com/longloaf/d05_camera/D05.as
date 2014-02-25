@@ -25,6 +25,12 @@ package com.longloaf.d05_camera
 		[Embed(source = "map.png")]
 		private static const Map:Class;
 		
+		[Embed(source = "death.mp3")]
+		private static const DeathSound:Class;
+		
+		[Embed(source = "pickup.mp3")]
+		private static const PickUpSound:Class;
+		
 		private const TILE_SIZE:int = 8;
 		private const HALF_TILE:Number = TILE_SIZE * 0.5;
 		
@@ -145,6 +151,7 @@ package com.longloaf.d05_camera
 		private function ovPlayer(o1:FlxObject, o2:FlxObject):void
 		{
 			player.kill();
+			FlxG.play(DeathSound);
 			bloodEmitter.at(player);
 			bloodEmitter.start(true);
 			cam1.shake();
@@ -154,6 +161,7 @@ package com.longloaf.d05_camera
 		private function ovPlayerGold(o1:FlxObject, o2:FlxObject):void
 		{
 			gold.kill();
+			FlxG.play(PickUpSound);
 			cam1.flash();
 			cam2.flash();
 		}
