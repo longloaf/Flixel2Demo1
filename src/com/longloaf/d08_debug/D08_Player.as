@@ -15,9 +15,6 @@ package com.longloaf.d08_debug
 		[Embed(source = "player_16x16_5.png")]
 		private static const Img:Class;
 		
-		[Embed(source = "particle_10x10_3.png")]
-		private static const ParticleImg:Class;
-		
 		[Embed(source = "death.mp3")]
 		private static const DeathSound:Class;
 		
@@ -48,19 +45,17 @@ package com.longloaf.d08_debug
 			maxVelocity.y = 300;
 			acceleration.y = 500;
 			
-			emitter = new FlxEmitter(0, 0, 20);
+			emitter = new FlxEmitter(0, 0, 50);
 			emitter.setSize(width, height);
-			emitter.gravity = 300;
+			emitter.gravity = acceleration.y;
 			emitter.setRotation(0, 0);
 			var particleSpeed:Number = 150;
 			emitter.setXSpeed( -particleSpeed, particleSpeed);
 			emitter.setYSpeed( -particleSpeed, particleSpeed);
 			for (var i:int = 0; i < emitter.maxSize; ++i) {
 				var p:FlxParticle = new FlxParticle();
-				//p.makeGraphic(10, 10, FlxU.makeColorFromHSB(0, 0, 0.9));;
-				p.loadGraphic(ParticleImg, true, false, 10, 10);
-				p.addAnimation("1", [0, 1, 2], 10);
-				p.play("1");
+				var s:int = int(Number(i) / emitter.maxSize * 9) + 2;
+				p.makeGraphic(s, s, FlxU.makeColorFromHSB(350, 1, 0.9));
 				p.exists = false;
 				emitter.add(p);
 			}
