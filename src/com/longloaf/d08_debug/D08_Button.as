@@ -12,6 +12,12 @@ package com.longloaf.d08_debug
 		[Embed(source = "button_16x16_3.png")]
 		private static const Img:Class;
 		
+		[Embed(source = "button_down.mp3")]
+		private static const DownSound:Class;
+		
+		[Embed(source = "button_up.mp3")]
+		private static const UpSound:Class;
+		
 		public var onButtonDown:Function = null;
 		public var onButtonUp:Function = null;
 		
@@ -46,6 +52,7 @@ package com.longloaf.d08_debug
 			if (onButtonDown != null) onButtonDown();
 			var timer:FlxTimer = new FlxTimer();
 			timer.start(time, 1, timerCallback);
+			FlxG.play(DownSound);
 		}
 		
 		private function timerCallback(t:FlxTimer):void
@@ -53,6 +60,7 @@ package com.longloaf.d08_debug
 			isPressed = false;
 			play(UP_ANIM);
 			if (onButtonUp != null) onButtonUp();
+			FlxG.play(UpSound);
 		}
 		
 	}

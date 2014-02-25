@@ -48,6 +48,8 @@ package com.longloaf.d08_debug
 		
 		private var spikeGroup:FlxGroup;
 		
+		private var itemGroup:FlxGroup;
+		
 		private var debugLayoutOld:uint;
 		
 		override public function create():void 
@@ -98,6 +100,18 @@ package com.longloaf.d08_debug
 			spikeGroup = new FlxGroup();
 			addSpikes(8, 12, 6);
 			
+			itemGroup = new FlxGroup();
+			addItems(8, 10, 9);
+			addItems(3, 4);
+			addItems(1, 7);
+			addItems(3, 10);
+			addItems(1, 13);
+			addItems(18, 13);
+			addItems(13, 4);
+			addItems(20, 4, 1);
+			addItems(12, 16);
+			addItems(19, 16);
+			
 			FlxG.watch(player, "maxVelX", "maxVelX");
 			FlxG.watch(player, "jumpVel", "jumpVel");
 			
@@ -106,17 +120,23 @@ package com.longloaf.d08_debug
 			add(buttonGroup);
 			add(doorGroup);
 			add(spikeGroup);
+			add(itemGroup);
+			add(player.emitter);
 			add(help);
 			add(new DemoPrompt("Debug"));
 		}
 		
 		override public function update():void 
 		{
+			if (FlxG.mouse.justPressed()) {
+				player.kill();
+			}
 			super.update();
 			FlxG.collide(player, map);
 			FlxG.collide(player, doorGroup);
 			FlxG.overlap(player, buttonGroup, ovPlayerButton);
 			FlxG.overlap(player, spikeGroup, ovPlayerSpike);
+			FlxG.overlap(player, itemGroup, ovPlayerItem);
 		}
 		
 		private function ovPlayerButton(o1:FlxObject, o2:FlxObject):void
@@ -127,6 +147,11 @@ package com.longloaf.d08_debug
 		private function ovPlayerSpike(o1:FlxObject, o2:FlxObject):void
 		{
 			player.kill();
+		}
+		
+		private function ovPlayerItem(o1:FlxObject, o2:FlxObject):void
+		{
+			(o2 as D08_Item).pickUp();
 		}
 		
 		private function button01Callback():void
@@ -140,12 +165,21 @@ package com.longloaf.d08_debug
 			door03.exists = !door03.exists;
 		}
 		
-		private function addSpikes(tx:int, ty:int, w:int):void
+		private function addSpikes(tx:int, ty:int, w:int = 1):void
 		{
-			for (var i:int = 0; i < w; ++i) {
+			for (var x:int = 0; x < w; ++x) {
 				var s:D08_Spike = new D08_Spike();
-				moveToTile(s, tx + i, ty, CENTER, TOP);
+				moveToTile(s, tx + x, ty, CENTER, TOP);
 				spikeGroup.add(s);
+			}
+		}
+		
+		private function addItems(tx:int, ty:int, w:int = 1):void
+		{
+			for (var x:int = 0; x < w; ++x) {
+				var item:D08_Item = new D08_Item();
+				moveToTile(item, tx + x, ty, CENTER, BOTTOM);
+				itemGroup.add(item);
 			}
 		}
 		

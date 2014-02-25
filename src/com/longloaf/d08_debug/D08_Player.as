@@ -1,7 +1,9 @@
 package com.longloaf.d08_debug 
 {
+	import org.flixel.FlxEmitter;
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;
+	import org.flixel.FlxParticle;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxU;
 	/**
@@ -13,6 +15,12 @@ package com.longloaf.d08_debug
 		[Embed(source = "player_16x16_5.png")]
 		private static const Img:Class;
 		
+		[Embed(source = "particle_10x10_3.png")]
+		private static const ParticleImg:Class;
+		
+		[Embed(source = "death.mp3")]
+		private static const DeathSound:Class;
+		
 		private var acc:Number = 500;
 		private var floorDrag:Number = 500;
 		private var _jumpVel:Number;
@@ -20,6 +28,8 @@ package com.longloaf.d08_debug
 		private const STOP_ANIM:String = "stop";
 		private const RUN_ANIM:String = "run";
 		private const JUMP_ANIM:String = "jump";
+		
+		public var emitter:FlxEmitter;
 		
 		public function D08_Player() 
 		{	
@@ -37,6 +47,23 @@ package com.longloaf.d08_debug
 			jumpVel = 150;
 			maxVelocity.y = 300;
 			acceleration.y = 500;
+			
+			emitter = new FlxEmitter(0, 0, 20);
+			emitter.setSize(width, height);
+			emitter.gravity = 300;
+			emitter.setRotation(0, 0);
+			var particleSpeed:Number = 150;
+			emitter.setXSpeed( -particleSpeed, particleSpeed);
+			emitter.setYSpeed( -particleSpeed, particleSpeed);
+			for (var i:int = 0; i < emitter.maxSize; ++i) {
+				var p:FlxParticle = new FlxParticle();
+				//p.makeGraphic(10, 10, FlxU.makeColorFromHSB(0, 0, 0.9));;
+				p.loadGraphic(ParticleImg, true, false, 10, 10);
+				p.addAnimation("1", [0, 1, 2], 10);
+				p.play("1");
+				p.exists = false;
+				emitter.add(p);
+			}
 		}
 		
 		override public function update():void 
@@ -87,6 +114,15 @@ package com.longloaf.d08_debug
 			return _jumpVel;
 		}
 		
+		override public function kill():void 
+		{
+			super.kill();
+			
+			FlxG.play(DeathSound);
+			
+			emitter.at(this);
+			emitter.start(true, 5);
+		}
 	}
 
 }
