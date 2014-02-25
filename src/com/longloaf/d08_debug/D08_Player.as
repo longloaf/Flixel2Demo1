@@ -13,9 +13,9 @@ package com.longloaf.d08_debug
 		[Embed(source = "player_16x16_5.png")]
 		private static const Img:Class;
 		
-		private var acc:Number = 300;
-		private var floorDrag:Number = 300;
-		private var _jumpVel:Number = -200;
+		private var acc:Number = 500;
+		private var floorDrag:Number = 500;
+		private var _jumpVel:Number;
 		
 		private const STOP_ANIM:String = "stop";
 		private const RUN_ANIM:String = "run";
@@ -33,8 +33,8 @@ package com.longloaf.d08_debug
 			
 			play(STOP_ANIM);
 			
-			maxVelX = 20;
-			jumpVel = 200;
+			maxVelX = 50;
+			jumpVel = 150;
 			maxVelocity.y = 300;
 			acceleration.y = 500;
 		}
@@ -69,7 +69,7 @@ package com.longloaf.d08_debug
 		
 		public function set maxVelX(v:Number):void
 		{
-			maxVelocity.x = FlxU.bound(v, 10, 500);
+			maxVelocity.x = FlxU.bound(v, 10, 100);
 		}
 		
 		public function get maxVelX():Number
