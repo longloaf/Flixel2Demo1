@@ -30,40 +30,64 @@ package com.longloaf.d06_particles
 		
 		private var help:DemoHelp;
 		
+		private var spr:FlxSprite;
 		private var emitter:FlxEmitter;
+		
+		private const particleFunctions:Vector.<Function> = Vector.<Function>([
+		createParticle1,
+		createParticle2
+		]);
 		
 		override public function create():void 
 		{
-			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0.1);
+			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0.8);
 			
 			help = new DemoHelp();
 			
+			spr = new FlxSprite();
+			spr.makeGraphic(200, 150, FlxU.makeColorFromHSB(0, 0, 0.6));
+			spr.x = (FlxG.width - spr.width) / 2;
+			spr.y = (FlxG.height - spr.height) / 2;
+			
 			emitter = new FlxEmitter(0, 0, 100);
-			emitter.bounce = 0.9;
-			//emitter.setRotation(-90, 90);
-			emitter.setSize(100, 100);
+			emitter.setSize(spr.width, spr.height);
 			emitter.x = (FlxG.width - emitter.width) / 2;
 			emitter.y = (FlxG.height - emitter.height) / 2;
-			//emitter.setXSpeed( -200, 200);
-			//emitter.setYSpeed( -200, 200);
-			//emitter.gravity = 500;
 			for (var i:int = 0; i < emitter.maxSize; ++i) {
-				var p:FlxParticle = new FlxParticle();
-				var img:Class = IMGS[int(Rnd.rnd(IMGS.length))];
-				p.loadGraphic(img)
+				var id:int = int(Rnd.rnd(particleFunctions.length));
+				var f:Function = particleFunctions[id];
+				var p:FlxParticle = f();
 				p.exists = false;
 				emitter.add(p);
 			}
-			emitter.start(false, 0, 0.02);// 0.001);
+			emitter.at(spr);
+			emitter.start(false, 0, 0.02);
 			
+			add(spr);
 			add(emitter);
 			add(help);
 			add(new DemoPrompt("Particles"));
 		}
 		
-		override public function update():void 
+		private function createParticle1():FlxParticle
 		{
-			super.update();
+			return new FlxParticle();
+		}
+		
+		private function createParticle2():FlxParticle
+		{
+			var p:FlxParticle = new FlxParticle();
+			p.makeGraphic(20, 15, FlxU.makeColorFromHSB(200, 0.9, 0.9));
+			var x1:Number = 0;
+			var x2:Number = p.width - 1;
+			var y1:Number = 0;
+			var y2:Number = p.height - 1;
+			var c:uint = 0xFF000000;
+			p.drawLine(x1, y1, x2, y1, c);
+			p.drawLine(x1, y2, x2, y2, c);
+			p.drawLine(x1, y1, x1, y2, c);
+			p.drawLine(x2, y1, x2, y2, c);
+			return p;
 		}
 		
 	}
