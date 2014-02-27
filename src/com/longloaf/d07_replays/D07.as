@@ -20,13 +20,6 @@ package com.longloaf.d07_replays
 			add(new DemoPrompt("Replays"));
 		}
 		
-		override public function update():void 
-		{
-			super.update();
-			
-			//FlxG.rec
-		}
-		
 	}
 
 }
