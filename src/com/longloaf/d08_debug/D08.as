@@ -128,9 +128,6 @@ package com.longloaf.d08_debug
 		
 		override public function update():void 
 		{
-			if (FlxG.mouse.justPressed()) {
-				player.kill();
-			}
 			super.update();
 			FlxG.collide(player, map);
 			FlxG.collide(player, doorGroup);
