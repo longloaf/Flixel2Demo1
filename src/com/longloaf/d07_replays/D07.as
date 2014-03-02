@@ -2,10 +2,12 @@ package com.longloaf.d07_replays
 {
 	import com.longloaf.DemoHelp;
 	import com.longloaf.DemoPrompt;
+	import com.longloaf.DemoText;
 	import com.longloaf.MenuState;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxState;
+	import org.flixel.FlxText;
 	import org.flixel.FlxU;
 	/**
 	 * ...
@@ -22,6 +24,16 @@ package com.longloaf.d07_replays
 		private var h:Number = 0;
 		private const DH:Number = 0.5;
 		
+		private static const INIT:int = 0;
+		private static const RECORD:int = 1;
+		private static const REPLAY:int = 2;
+		private static var status:int = INIT;
+		
+		private var statusText:FlxText;
+		//
+		private var recordText:FlxText;
+		private var replayText:FlxText;
+		
 		override public function create():void 
 		{
 			help = new DemoHelp();
@@ -34,8 +46,13 @@ package com.longloaf.d07_replays
 			sprite.x = (FlxG.width - sprite.width) / 2;
 			sprite.y = (FlxG.height - sprite.height) / 2;
 			
+			statusText = new FlxText(0, 0, FlxG.width, "?");
+			statusText.alignment = "center";
+			statusText.shadow = FlxG.BLACK;
+			
 			add(canvas);
 			add(sprite);
+			add(statusText);
 			//add(help);
 			//add(new DemoPrompt("Replays"));
 		}
@@ -58,9 +75,35 @@ package com.longloaf.d07_replays
 				h -= 360;
 			}
 			
-			if (FlxG.keys.justPressed("ESCAPE")) {
-				FlxG.switchState(new MenuState());
+			if (status == INIT) {
+				statusText.text = "INIT";
+			} else if (status == RECORD) {
+				statusText.text = "RECORD";
+			} else if (status == REPLAY) {
+				statusText.text = "REPLAY";
+			} else {
+				statusText.text = "ERROR";
 			}
+			
+			if (status == INIT) {
+				recordReplay();
+			} else if (status == RECORD) {
+				if (FlxG.keys.justPressed("ESCAPE")) {
+					status = INIT;
+					FlxG.stopRecording();
+					FlxG.switchState(new MenuState());
+				} else if (FlxG.keys.justPressed("R")) {
+					status = REPLAY;
+					var rec:String = FlxG.stopRecording();
+					FlxG.loadReplay(rec, new D07, ["ANY", "MOUSE"], 0, recordReplay);
+				}
+			}
+		}
+		
+		private function recordReplay():void
+		{
+			status = RECORD;
+			FlxG.recordReplay(false);
 		}
 		
 	}
