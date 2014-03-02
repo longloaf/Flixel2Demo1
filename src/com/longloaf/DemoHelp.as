@@ -35,7 +35,7 @@ package com.longloaf
 			group.visible = false;
 			add(group);
 			
-			helpText = new DemoText(0, 0, FlxG.width, "F1 - HELP");
+			helpText = new DemoText(0, 0, FlxG.width, "[F1] - HELP");
 			helpText.color = 0xFFD8E0F0;
 			add(helpText);
 		}

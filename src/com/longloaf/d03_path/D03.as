@@ -26,7 +26,7 @@ package com.longloaf.d03_path
 			FlxG.bgColor = FlxU.makeColorFromHSB(60, 0.5, 0.9);
 			
 			help = new DemoHelp();
-			help.addText("[MOUSE] - select and drag points");
+			help.addText("[Mouse] - select and drag points");
 			help.addText("[N] - add new point");
 			help.addText("[R] - remove selected point");
 			

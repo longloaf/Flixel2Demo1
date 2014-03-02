@@ -30,13 +30,12 @@ package com.longloaf.d07_replays
 		private static var status:int = INIT;
 		
 		private var statusText:FlxText;
-		//
-		private var recordText:FlxText;
-		private var replayText:FlxText;
 		
 		override public function create():void 
 		{
 			help = new DemoHelp();
+			help.addText("[Mouse]");
+			help.addText("[Arrows]");
 			
 			canvas = new FlxSprite();
 			canvas.makeGraphic(FlxG.width, FlxG.height, 0, true);
@@ -49,11 +48,19 @@ package com.longloaf.d07_replays
 			statusText = new FlxText(0, 0, FlxG.width, "?");
 			statusText.alignment = "center";
 			statusText.shadow = FlxG.BLACK;
+			statusText.y = FlxG.height - statusText.height;
+			if (status == RECORD) {
+				statusText.text = "RECORDING: [Enter] - replay, [Esc] - exit";
+				statusText.color = FlxG.RED;
+			} else if (status == REPLAY) {
+				statusText.text = "REPLAYING: [Mouse button] - stop";
+				statusText.color = FlxG.GREEN;
+			}
 			
 			add(canvas);
 			add(sprite);
 			add(statusText);
-			//add(help);
+			add(help);
 			//add(new DemoPrompt("Replays"));
 		}
 		
@@ -76,28 +83,23 @@ package com.longloaf.d07_replays
 			}
 			
 			if (status == INIT) {
-				statusText.text = "INIT";
-			} else if (status == RECORD) {
-				statusText.text = "RECORD";
-			} else if (status == REPLAY) {
-				statusText.text = "REPLAY";
-			} else {
-				statusText.text = "ERROR";
-			}
-			
-			if (status == INIT) {
 				recordReplay();
 			} else if (status == RECORD) {
 				if (FlxG.keys.justPressed("ESCAPE")) {
 					status = INIT;
 					FlxG.stopRecording();
 					FlxG.switchState(new MenuState());
-				} else if (FlxG.keys.justPressed("R")) {
-					status = REPLAY;
-					var rec:String = FlxG.stopRecording();
-					FlxG.loadReplay(rec, new D07, ["ANY", "MOUSE"], 0, recordReplay);
+				} else if (FlxG.keys.justPressed("ENTER")) {
+					loadReplay();
 				}
 			}
+		}
+		
+		private function loadReplay():void
+		{
+			status = REPLAY;
+			var rec:String = FlxG.stopRecording();
+			FlxG.loadReplay(rec, new D07, ["MOUSE"], 0, recordReplay);
 		}
 		
 		private function recordReplay():void

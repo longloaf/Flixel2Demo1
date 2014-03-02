@@ -20,8 +20,6 @@ package com.longloaf.d06_particles
 		[Embed(source = "face_20x24_8.png")]
 		private static const Face:Class;
 		
-		private var help:DemoHelp;
-		
 		private var spr:FlxSprite;
 		private var emitter:FlxEmitter;
 		
@@ -35,8 +33,6 @@ package com.longloaf.d06_particles
 		override public function create():void 
 		{
 			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0.8);
-			
-			help = new DemoHelp();
 			
 			spr = new FlxSprite();
 			spr.makeGraphic(200, 150, FlxU.makeColorFromHSB(0, 0, 0.6));
@@ -59,7 +55,6 @@ package com.longloaf.d06_particles
 			
 			add(spr);
 			add(emitter);
-			add(help);
 			add(new DemoPrompt("Particles"));
 		}
 		

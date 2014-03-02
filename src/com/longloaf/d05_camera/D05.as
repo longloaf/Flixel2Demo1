@@ -55,7 +55,7 @@ package com.longloaf.d05_camera
 			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0);
 			
 			help = new DemoHelp();
-			help.addText("[ARROWS]");
+			help.addText("[Arrows]");
 			
 			tileMap = new FlxTilemap();
 			tileMap.loadMap(FlxTilemap.imageToCSV(Map), Tiles, TILE_SIZE, TILE_SIZE, FlxTilemap.OFF, 0, 0);

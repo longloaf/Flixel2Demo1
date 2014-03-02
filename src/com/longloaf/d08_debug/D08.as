@@ -57,7 +57,7 @@ package com.longloaf.d08_debug
 			FlxG.bgColor = 0xFFF0BE4C;
 			
 			help = new DemoHelp();
-			help.addText("[ARROWS]");
+			help.addText("[Arrows]");
 			
 			map = new FlxTilemap();
 			map.loadMap(FlxTilemap.imageToCSV(Map), Tiles, 0, 0, FlxTilemap.AUTO);
