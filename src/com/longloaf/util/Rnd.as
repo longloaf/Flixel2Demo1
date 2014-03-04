@@ -1,4 +1,4 @@
-package com.longloaf 
+package com.longloaf.util 
 {
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;

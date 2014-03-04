@@ -1,6 +1,6 @@
 package com.longloaf.d01_sprite 
 {
-	import com.longloaf.Rnd;
+	import com.longloaf.util.Rnd;
 	import flash.display.BlendMode;
 	import org.flixel.FlxG;
 	import org.flixel.FlxObject;

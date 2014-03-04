@@ -2,7 +2,7 @@ package com.longloaf.d06_particles
 {
 	import com.longloaf.DemoHelp;
 	import com.longloaf.DemoPrompt;
-	import com.longloaf.Rnd;
+	import com.longloaf.util.Rnd;
 	import org.flixel.FlxEmitter;
 	import org.flixel.FlxG;
 	import org.flixel.FlxParticle;

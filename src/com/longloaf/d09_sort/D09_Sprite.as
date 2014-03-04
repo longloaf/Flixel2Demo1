@@ -1,6 +1,6 @@
 package com.longloaf.d09_sort 
 {
-	import com.longloaf.Rnd;
+	import com.longloaf.util.Rnd;
 	import org.flixel.FlxG;
 	import org.flixel.FlxPoint;
 	import org.flixel.FlxSprite;

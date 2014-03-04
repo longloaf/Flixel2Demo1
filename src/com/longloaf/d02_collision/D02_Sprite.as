@@ -1,6 +1,6 @@
 package com.longloaf.d02_collision 
 {
-	import com.longloaf.Rnd;
+	import com.longloaf.util.Rnd;
 	import org.flixel.FlxG;
 	import org.flixel.FlxSprite;
 	import org.flixel.FlxU;

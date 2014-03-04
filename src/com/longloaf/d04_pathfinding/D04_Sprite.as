@@ -1,6 +1,6 @@
 package com.longloaf.d04_pathfinding 
 {
-	import com.longloaf.Rnd;
+	import com.longloaf.util.Rnd;
 	import org.flixel.FlxG;
 	import org.flixel.FlxPath;
 	import org.flixel.FlxPoint;

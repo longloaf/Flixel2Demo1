@@ -3,7 +3,7 @@ package com.longloaf.d02_collision
 	import com.longloaf.DemoHelp;
 	import com.longloaf.DemoPrompt;
 	import com.longloaf.DemoText;
-	import com.longloaf.Rnd;
+	import com.longloaf.util.Rnd;
 	import org.flixel.FlxG;
 	import org.flixel.FlxGroup;
 	import org.flixel.FlxObject;
