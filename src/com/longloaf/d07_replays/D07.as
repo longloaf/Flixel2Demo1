@@ -24,8 +24,7 @@ package com.longloaf.d07_replays
 		
 		private var spr02Group:FlxGroup;
 		
-		private const V:Number = 200;
-		private var sprite:FlxSprite;
+		private var spr01:D07_Sprite01;
 		
 		private static const INIT:int = 0;
 		private static const RECORD:int = 1;
@@ -52,11 +51,8 @@ package com.longloaf.d07_replays
 				sprTrace.addSpr(s02);
 			}
 			
-			sprite = new FlxSprite();
-			sprite.makeGraphic(30, 30, FlxU.makeColorFromHSB(30, 0.9, 0.9));
-			sprite.x = (FlxG.width - sprite.width) / 2;
-			sprite.y = (FlxG.height - sprite.height) / 2;
-			sprTrace.addSpr(sprite);
+			spr01 = new D07_Sprite01();
+			sprTrace.addSpr(spr01, FlxG.WHITE);
 			
 			statusText = new FlxText(0, 0, FlxG.width, "?");
 			statusText.alignment = "center";
@@ -72,22 +68,13 @@ package com.longloaf.d07_replays
 			
 			add(sprTrace);
 			add(spr02Group);
-			add(sprite);
+			add(spr01);
 			add(statusText);
 			add(help);
-			//add(new DemoPrompt("Replays"));
 		}
 		
 		override public function update():void 
 		{
-			sprite.velocity.x = 0;
-			if (FlxG.keys.LEFT) sprite.velocity.x -= V;
-			if (FlxG.keys.RIGHT) sprite.velocity.x += V;
-			
-			sprite.velocity.y = 0;
-			if (FlxG.keys.UP) sprite.velocity.y -= V;
-			if (FlxG.keys.DOWN) sprite.velocity.y += V;
-			
 			if (FlxG.keys.justPressed("C")) {
 				sprTrace.clear();
 			}
