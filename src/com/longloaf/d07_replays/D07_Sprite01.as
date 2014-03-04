@@ -11,6 +11,8 @@ package com.longloaf.d07_replays
 	 */
 	public class D07_Sprite01 extends FlxSprite
 	{
+		[Embed(source = "circle.png")]
+		private static const Img:Class;
 		
 		private var canvas:FlxSprite;
 		
@@ -31,11 +33,23 @@ package com.longloaf.d07_replays
 		
 		private const MAX_VEL:Number = 10;
 		
+		private var leftX:Number;
+		private var rightX:Number;
+		private var topY:Number;
+		private var bottomY:Number;
+		
 		public function D07_Sprite01() 
 		{
-			makeGraphic(20, 20, FlxU.makeColorFromHSB(200, 0.9, 0.9))
+			loadGraphic(Img);
 			x = (FlxG.width - width) / 2;
 			y = (FlxG.height - height) / 2;
+			
+			var k:Number = 0.8;
+			var p:Number = 1 - k;
+			leftX = -k * width;
+			rightX = FlxG.width - p * width;
+			topY = -k * height;
+			bottomY = FlxG.height - p * height;
 		}
 		
 		override public function update():void 
@@ -65,6 +79,17 @@ package com.longloaf.d07_replays
 			x += vel.x;
 			y += vel.y;
 			
+			if (x < leftX) {
+				x = leftX;
+			} else if (x > rightX) {
+				x = rightX;
+			}
+			
+			if (y < topY) {
+				y = topY;
+			} else if (y > bottomY) {
+				y = bottomY;
+			}
 		}
 		
 	}

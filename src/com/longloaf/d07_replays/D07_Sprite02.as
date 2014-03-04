@@ -16,6 +16,7 @@ package com.longloaf.d07_replays
 		public function D07_Sprite02(sx:Number, sy:Number) 
 		{
 			makeGraphic(10, 10, 0x30FFFFFF);
+			visible = false;
 			veh.reset(new Vec2D(sx, sy));
 			updXY();
 		}

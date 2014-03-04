@@ -26,6 +26,8 @@ package com.longloaf.d07_replays
 		
 		private var spr01:D07_Sprite01;
 		
+		private var mouse:D07_Mouse;
+		
 		private static const INIT:int = 0;
 		private static const RECORD:int = 1;
 		private static const REPLAY:int = 2;
@@ -45,14 +47,17 @@ package com.longloaf.d07_replays
 			
 			spr02Group = new FlxGroup();
 			
+			var c:uint = FlxU.makeColorFromHSB(120, 0.5, 0.6);
 			for (var i:int = 0; i < 10; ++i) {
 				var s02:D07_Sprite02 = new D07_Sprite02(Rnd.rnd(FlxG.width), Rnd.rnd(FlxG.height));
 				spr02Group.add(s02);
-				sprTrace.addSpr(s02);
+				sprTrace.addSpr(s02, c);
 			}
 			
 			spr01 = new D07_Sprite01();
 			sprTrace.addSpr(spr01, FlxG.WHITE);
+			
+			mouse = new D07_Mouse();
 			
 			statusText = new FlxText(0, 0, FlxG.width, "?");
 			statusText.alignment = "center";
@@ -61,14 +66,17 @@ package com.longloaf.d07_replays
 			if (status == RECORD) {
 				statusText.text = "RECORDING: [Enter] - replay, [Esc] - exit";
 				statusText.color = FlxG.RED;
+				mouse.exists = false;
 			} else if (status == REPLAY) {
 				statusText.text = "REPLAYING: [Mouse button] - stop";
 				statusText.color = FlxG.GREEN;
+				help.exists = false;
 			}
 			
 			add(sprTrace);
 			add(spr02Group);
 			add(spr01);
+			add(mouse);
 			add(statusText);
 			add(help);
 		}
