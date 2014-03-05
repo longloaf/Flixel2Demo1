@@ -8,9 +8,9 @@ package com.longloaf.util
 	{
 		public var loc:Vec2D = new Vec2D();
 		public var vel:Vec2D = new Vec2D();
-		public var goal:Vec2D = new Vec2D();
+		public var target:Vec2D = new Vec2D();
 		
-		private var tmpGoal:Vec2D = new Vec2D();
+		private var tempTarget:Vec2D = new Vec2D();
 		private var v:Vec2D = new Vec2D();
 		
 		private var stop:Boolean = false;
@@ -32,10 +32,10 @@ package com.longloaf.util
 		// двигаясь к случано выбранным не далеко от цели точкам.
 		// Расстояние от этих точек до цели не более stopR.
 		// Когда кружащий вокруг цели Veh приближается к случайной точке
-		// на расстояние stopGoalDist, выбирается новая случайная точка.
+		// на расстояние stopTargetDist, выбирается новая случайная точка.
 		public var stopDist:Number = 30;
 		public var stopR:Number = 10; // < stopDist
-		public var stopGoalDist:Number = 5;
+		public var stopTargetDist:Number = 5;
 		
 		private var ang:Number = 0;
 		public var dang:Number = 0.3;
@@ -44,13 +44,13 @@ package com.longloaf.util
 		public function reset(l:Vec2D):void
 		{
 			loc.assign(l);
-			resetGoal(l);
+			resetTarget(l);
 			vel.clear();
 		}
 		
-		public function resetGoal(g:Vec2D = null):void
+		public function resetTarget(t:Vec2D = null):void
 		{
-			if (g != null) goal.assign(g);
+			if (t != null) target.assign(t);
 			stop = false;
 		}
 		
@@ -58,26 +58,26 @@ package com.longloaf.util
 		{
 			var acc:Number;
 			var vmag:Number;
-			v.diff(loc, goal);
+			v.diff(loc, target);
 			var m:Number = v.mag();
 			if (m <= stopDist) {
 				if (!stop) {
-					findStopGoal();
+					findStopTarget();
 					stop = true;
-				} else if (Vec2D.distSq(loc, tmpGoal) <= stopGoalDist * stopGoalDist) {
-					findStopGoal();
+				} else if (Vec2D.distSq(loc, tempTarget) <= stopTargetDist * stopTargetDist) {
+					findStopTarget();
 				}
 				acc = stopAcc;
 			} else {
 				stop = false;
 				ang += Rnd.signum() * dang;
-				tmpGoal.fromAngle(ang);
-				tmpGoal.mult(m * moveK);
-				tmpGoal.add(goal);
+				tempTarget.fromAngle(ang);
+				tempTarget.mult(m * moveK);
+				tempTarget.add(target);
 				acc = moveAcc;
 			}
 			
-			v.diff(loc, tmpGoal);
+			v.diff(loc, tempTarget);
 			m = v.mag();
 			if (m >= maxDist) {
 				vmag = maxVel;
@@ -93,11 +93,11 @@ package com.longloaf.util
 			loc.add(vel);
 		}
 		
-		private function findStopGoal():void
+		private function findStopTarget():void
 		{
-			tmpGoal.fromAngle(Rnd.angleRad());
-			tmpGoal.mult(Rnd.rnd(stopR));
-			tmpGoal.add(goal);
+			tempTarget.fromAngle(Rnd.angleRad());
+			tempTarget.mult(Rnd.rnd(stopR));
+			tempTarget.add(target);
 		}
 		
 		public function stopped():Boolean

@@ -24,7 +24,7 @@ package com.longloaf.d07_replays
 		override public function update():void 
 		{
 			if (FlxG.mouse.pressed()) {
-				veh.goal.setxy(FlxG.mouse.x, FlxG.mouse.y);
+				veh.target.setxy(FlxG.mouse.x, FlxG.mouse.y);
 			}
 			veh.update();
 			updXY();

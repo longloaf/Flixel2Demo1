@@ -35,12 +35,17 @@ package com.longloaf
 		{
 			FlxG.bgColor = FlxU.makeColorFromHSB(0, 0, 0.1);
 			
-			var text:FlxText = new FlxText(0, 20, FlxG.width, "FLIXEL 2.55 DEMO");
-			text.size = 16;
-			text.alignment = "center";
-			add(text);
+			var title:DemoText = new DemoText(0, 20, FlxG.width, "FLIXEL DEMO");
+			title.size = 16;
+			title.alignment = "center";
+			add(title);
 			
-			var y0:Number = text.y + text.height + 20;
+			var flixelVersion:DemoText = new DemoText(0, 0, FlxG.width, "Flixel 2.55");
+			flixelVersion.alignment = "center";
+			flixelVersion.y = FlxG.height - flixelVersion.height;
+			add(flixelVersion);
+			
+			var y0:Number = title.y + title.height + 20;
 			var colNum:int = 4;
 			var rowNum:int = 7;
 			var colWidth:Number = FlxG.width / colNum;
